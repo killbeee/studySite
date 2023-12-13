@@ -23,7 +23,12 @@ public class IndexPageController {
       
         return "index.html";
     }
-
+    @RequestMapping("/post/postDetail.do")
+    public String goMakePost(Model model) { 
+        model.addAttribute("type", model.getAttribute("type"));
+        return "postDetail.html";
+    }
+    
     @GetMapping("/client/myPage.do")
     public String go(Model model) { 
           

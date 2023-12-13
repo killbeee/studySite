@@ -9,40 +9,15 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 </head>
-<div th:replace="/header :: header"></div>
+<div th:replace="/headerS :: headerS"></div>
 <body>
 
   <!-- ======= Mobile nav toggle button ======= -->
   <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
-
-  <!-- ======= Header ======= -->
-  <header id="header">
-    <div class="d-flex flex-column">
-
-      <div class="profile">
-        <img src="assets/img/profile-img.gif" alt="" class="img-fluid rounded-circle">
-        <h1 class="text-light"><a href="index.html">Kill Bee</a></h1>
-        <div class="social-links mt-3 text-center">
-          <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-          <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-          <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-        </div>
-      </div>
-
-      <nav id="navbar" class="nav-menu navbar">
-        <ul>
-          <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
-          <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
-          <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
-          <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
-          <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
-        </ul>
-      </nav><!-- .nav-menu -->
-    </div>
-  </header><!-- End Header -->
-
+  
+  <!-- ======= 헤더 ======= -->
+  <div th:replace="/header :: header"></div>
+  
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
     <div class="hero-container" data-aos="fade-in">
@@ -52,7 +27,6 @@
   </section><!-- End Hero -->
 
   <main id="main">
-
     <!-- ======= About Section ======= -->
     <section id="about" class="about">
       <div class="container">
@@ -237,17 +211,17 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Study</h2>
+          <h2>Study</h2><button onclick="goMovement('submit')">글 등록하기</button>
           <p>프론트, 백, DB관련 정보를 기입합니다.</p>
         </div>
 
         <div class="row" data-aos="fade-up">
           <div class="col-lg-12 d-flex justify-content-center">
             <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">FRONT</li>
-              <li data-filter=".filter-card">BACK</li>
-              <li data-filter=".filter-web">DB</li>
+              <li class="filter-active">All</li>
+              <li>FRONT</li>
+              <li>BACK</li>
+              <li>DB</li>
             </ul>
           </div>
         </div>
@@ -343,18 +317,10 @@
   </footer>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="jquery/jquery-3.7.0.min.js"></script>
+<form id="teleForm">
+	<input name="type" type="hidden">
+</form>
+<div th:replace="/footScript :: footerS"></div>
 <script>
 $(document).ready(function(){
 	getData();
@@ -369,10 +335,6 @@ function getData(){
 				html += '<div class="col-lg-4 col-md-6 portfolio-item filter-app">'
 				html += '	<div class="portfolio-wrap">'
 				html += '		<img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">'
-				html += '		<div class="portfolio-links">'
-				html += '			<a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>'
-				html += '			<a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>'
-				html += '		</div>'
 				html += '		<div class="desc">Add a description of the image here</div>'
 				html += '	</div>'
 				html += '</div>'
@@ -385,7 +347,16 @@ function getData(){
 		}
 	});
 }
+function goMovement(type){
+	var url = "";
+	if(type == 'submit'){
+		url = "/post/postDetail.do"
+	}
+	$("#teleForm").attr("action",url);
+	$("#teleForm").submit();
+}
 </script>
+
 </body>
 </html>
 	
