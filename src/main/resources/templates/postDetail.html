@@ -11,7 +11,6 @@
     <!-- ======= Breadcrumbs ======= -->
     <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
-
         <div class="d-flex justify-content-between align-items-center">
           <h2>Portfoio Details</h2>
           <ol>
@@ -28,46 +27,20 @@
       <div class="container">
 
         <div class="row gy-4">
-
-          <div class="col-lg-8">
-            <div class="portfolio-details-slider swiper">
-              <div class="swiper-wrapper align-items-center">
-
-                <div class="swiper-slide">
-                  <img th:src="@{/assets/img/portfolio/portfolio-details-1.jpg}" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img th:src="@{/assets/img/portfolio/portfolio-details-2.jpg}" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img th:src="@{/assets/img/portfolio/portfolio-details-3.jpg}" alt="">
-                </div>
-
-              </div>
-              <div class="swiper-pagination"></div>
-            </div>
-          </div>
-
-          <div class="col-lg-4">
-            <div class="portfolio-info">
-              <h3>Project information</h3>
-              <ul>
-                <li><strong>Category</strong>: Web design</li>
-                <li><strong>Client</strong>: ASU Company</li>
-                <li><strong>Project date</strong>: 01 March, 2020</li>
-                <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
-              </ul>
-            </div>
-            <div class="portfolio-description">
-              <h2>This is an example of portfolio detail</h2>
-              <p>
-                Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
-              </p>
-            </div>
-          </div>
-
+			<form id="uploadForm" enctype="multipart/form-data">
+				<div class="col-lg-10 mx-auto">
+				    <h1 class="fw-bolder mb-1 fontKortraDefault">오늘은 뭘 공부했느냐..</h1><br>
+				     <select class="form-control" name="postType">
+						<option value="front">Front</option>
+						<option value="back">Back</option>
+						<option value="db">DB</option>						
+					</select>
+					<input type="text" class="form-control border-3" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요" required=""><br>
+					<input type="hidden" name="postContent" id="hiddenContent">
+                    <div id="postContent"></div>
+                    <p id="createTodayBtn" class="btn btn-primary fontKortraDefault" style="display: flex;margin-left: auto;">작성하기</p>
+				</div>  		    
+			</form>	
         </div>
 
       </div>
@@ -90,4 +63,47 @@
 
 </body>
 <div th:replace="/footScript :: footerS"></div>
+<script>
+$(document).ready(function(){
+	//공통함수에서 서머노트 호출
+	setSummernoteBasic("postContent");
+	
+})
+
+$("#createTodayBtn").click(function(){
+	//저장
+	dataSubmit();
+})
+
+
+
+//저장하기
+function dataSubmit() {
+    $("#hiddenContent").val($('#postContent').summernote('code'));
+    var data = new FormData($("#uploadForm")[0]);
+    var url = "/client/portfolio/createToday.do";
+    $.ajax({
+        url: url, // Fix the URL variable
+        data: data,
+        processData: false, // Fix the comma here
+        contentType: false, // Fix the contentType
+        type: "POST",
+        success: function() {
+        	//alert("등록에 성공했습니다.");
+        	Swal.fire({
+				  title: '등록에 성공했습니다!',
+				  text: '공부 내역을 저장했음다',
+				  imageUrl: '/common/img/jerryCon.gif',
+				  imageWidth: 400,
+				  imageHeight: 200,
+				  imageAlt: 'Custom image',
+				})
+        	window.location.href = '/';
+	    },
+	    error: function(e) {
+	        console.log(e);
+	    }
+    })
+}
+</script>
 </html>

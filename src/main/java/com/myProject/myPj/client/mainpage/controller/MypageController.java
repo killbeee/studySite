@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,13 +48,8 @@ public class MypageController {
         return "jsonView";
      
     }
-    @RequestMapping(value={"/client/myPage/goCreateToday.do"})
-    public String goCreateToday(Model model) {
-    	
-        return "client/myPage/createMyToday.html";
-    }
-    
-    @RequestMapping(value = "/client/myPage/createToday.do",method = RequestMethod.POST)
+    @Transactional
+    @RequestMapping(value = "/client/portfolio/createToday.do",method = RequestMethod.POST)
     public String createToday(Model model,MultipartHttpServletRequest req,HttpServletRequest request){
 
     	// Access regular form fields
@@ -75,17 +71,17 @@ public class MypageController {
         paramMap.put("postTitle", postTitle);
         paramMap.put("postContent", postContent);
         paramMap.put("id", referKey);
-        HttpSession session = request.getSession(false);
-    	UserVo userVo;
-    	String userId = "";
-    		userVo = (UserVo)session.getAttribute("UserVo");
-    		userId = userVo.getUserId();
-    	paramMap.put("writer", userId);
+//        HttpSession session = request.getSession(false);
+//    	UserVo userVo;
+//    	String userId = "";
+//    		userVo = (UserVo)session.getAttribute("UserVo");
+//    		userId = userVo.getUserId();
+    	paramMap.put("writer", "KillBee");
         //게시물 정보 삽입
         suc = myPageService.insertPostInfo(paramMap);
         
         if(suc) {
-        	if(!req.getFile("img_upload").isEmpty()) {
+        	if(req.getFile("img_upload") != null) {
         		MultipartFile imageFile = req.getFile("img_upload");
             	if(imageFile != null && !imageFile.isEmpty()) {
             		// 파일 정보삽입
@@ -98,6 +94,6 @@ public class MypageController {
         
         model.addAttribute("resultMap", resultMap);
         
-        return "client/myPage/shareToday.html";
+        return "index.html";
     }
 }
