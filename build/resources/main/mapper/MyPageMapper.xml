@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myProject.myPj.client.mainpage.mapper.MyPageMapper">	<!-- mapper 인터페이스가 위치하는 경로 -->
+     <select id="getShareTodayPost" resultType="com.myProject.myPj.vo.PostVo">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
+        SELECT
+        		 *
+        		 ,GROUP_CONCAT(trans_file_path SEPARATOR ', ') AS fileList 
+        FROM 
+        		POST_TABLE pt
+				left outer join FILE_TABLE ft 
+				on ft.FILE_REFER_KEY = pt.ID 
+    </select>
+    <insert id="insertPostInfo" parameterType="hashMap">
+		INSERT 
+			INTO POST_TABLE(
+				ID,
+				TITLE,
+				CONTENT,
+				WRITER,
+				VIEW_CNT,
+				NOTICE_YN,
+				DELETE_YN,
+				CREATE_DATE,
+				POST_TYPE
+			)VALUES(
+				#{id}
+				,#{postTitle}
+				,#{postContent}
+				,#{writer}
+				,0
+				,0
+				,'N'
+				,NOW()
+				,#{postType}						
+			)
+		
+	</insert>
+</mapper>

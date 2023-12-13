@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myProject.myPj.common.file.mapper.FileMapper">	<!-- mapper 인터페이스가 위치하는 경로 -->
+    <insert id="insertFileInfo" parameterType="hashMap">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
+      INSERT 
+      INTO FILE_TABLE(
+     	FILE_ID,
+		FILE_REFER_KEY,
+		ORI_FILE_NAME,
+		TRANS_FILE_NAME,
+		REG_DATE,
+		POST_TYPE,
+		TRANS_FILE_PATH
+		)VALUES(
+		#{fileKeyId}
+		,#{referKey}
+		,#{oriFileName}
+		,#{transFileName}
+		,NOW()
+		,#{postType}
+		,#{transFilePath}
+		)
+    </insert>
+    <insert id="summerNoteSave" parameterType="com.myProject.myPj.vo.FileVo">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
+      INSERT 
+      INTO FILE_TABLE(
+     	FILE_ID,
+		FILE_REFER_KEY,
+		ORI_FILE_NAME,
+		TRANS_FILE_NAME,
+		REG_DATE,
+		POST_TYPE,
+		TRANS_FILE_PATH
+		)VALUES(
+		#{fileId}
+		,null
+		,#{oriFileName}
+		,#{transFileName}
+		,#{regDate}
+		,#{postType}
+		,#{transFilePath}
+		)
+    </insert>
+     <select id="selectSummerNoteSave" parameterType="String" resultType ="com.myProject.myPj.vo.FileVo">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
+      SELECT 
+      	FILE_ID,
+		FILE_REFER_KEY,
+		ORI_FILE_NAME,
+		TRANS_FILE_NAME,
+		REG_DATE,
+		POST_TYPE,
+		TRANS_FILE_PATH
+	  FROM 
+      	FILE_TABLE
+      WHERE TRANS_FILE_NAME = #{fileId}
+    </select>
+</mapper>
