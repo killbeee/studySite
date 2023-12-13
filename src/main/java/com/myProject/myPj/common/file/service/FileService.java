@@ -39,14 +39,12 @@ public class FileService {
 		 boolean sucOrfal = false;
 	     List<MultipartFile> multipartFileList = new ArrayList<>();
 	     try{
-		         MultiValueMap<String, MultipartFile> files = req.getMultiFileMap();
-		         for (Map.Entry<String, List<MultipartFile>> entry : files.entrySet()) {
-		             List<MultipartFile> fileList = entry.getValue();
-		             for (MultipartFile file : fileList) {
-		                 if (file.isEmpty()) continue;
-		                 multipartFileList.add(file);
-		             }
-		         }
+	    	 	MultipartFile files = req.getFile("img_upload");
+		        
+	            
+            	 multipartFileList.add(files);
+
+		         
 
 		         if(multipartFileList.size()>0) {
 		             for(MultipartFile file: multipartFileList) {
