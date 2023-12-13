@@ -38,6 +38,17 @@
 					<input type="text" class="form-control border-3" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요" required=""><br>
 					<input type="hidden" name="postContent" id="hiddenContent">
                     <div id="postContent"></div>
+                    <p>미리보기 이미지 업로드</p><hr>
+                   	<!--파일 업로드 부분(미리보기)-->
+                    <div style="display: inline;">
+			            <label for="img_upload">
+			                <img th:src="@{/common/img/picPlus.png}" style="width:100px; height:100px; cursor: pointer;">
+			            </label>
+			            <input type="file" name="img_upload" id="img_upload"onchange="previewImage(this,'imgArea')" style="display: none;" multiple>				            
+			            <span id='imgArea'style='position:relative; color: black; border: 0px solid black;'>
+			       		</span>
+		       		</div><hr><br>
+		       		<!--파일 업로드 부분(미리보기) 끝-->
                     <p id="createTodayBtn" class="btn btn-primary fontKortraDefault" style="display: flex;margin-left: auto;">작성하기</p>
 				</div>  		    
 			</form>	
@@ -97,8 +108,10 @@ function dataSubmit() {
 				  imageWidth: 400,
 				  imageHeight: 200,
 				  imageAlt: 'Custom image',
+				  didClose: () => {
+				    window.location.href = '/';
+				  }
 				})
-        	window.location.href = '/';
 	    },
 	    error: function(e) {
 	        console.log(e);

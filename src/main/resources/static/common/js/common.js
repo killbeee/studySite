@@ -77,6 +77,16 @@ function fileRemove(index) {
 //썸네일 미리보기.
 function previewImage(targetObj, imgArea) {
     var files=targetObj.files;
+    if(files.length > 1 ){
+		Swal.fire({
+		  icon: "error",
+		  title: "이런....",
+		  text: "사진은 하나만 올려주세요",
+		  didClose: () => {
+		    return false;
+		  }
+		});
+	}else{
     fileArr=Array.prototype.slice.call(files);
     
     var preview = document.getElementById(imgArea); //div id
@@ -157,4 +167,5 @@ function previewImage(targetObj, imgArea) {
             }
         }
     }
+   }
 }

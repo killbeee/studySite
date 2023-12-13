@@ -94,6 +94,6 @@ public class MypageController {
         
         model.addAttribute("resultMap", resultMap);
         
-        return "index.html";
+        return "jsonView";
     }
 }

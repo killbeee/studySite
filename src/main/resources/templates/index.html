@@ -331,10 +331,11 @@ function getData(){
 		, type : "post"
 		, success : function(res) {
 			let html ="";
+			debugger;
 			for(let i=0 ;i<res.postList.length;i++){
 				html += '<div class="col-lg-4 col-md-6 portfolio-item filter-app">'
 				html += '	<div class="portfolio-wrap">'
-				html += '		<img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">'
+				html += '		<img src="/outSource'+res.postList[i].fileList+'" class="img-fluid" alt="">'
 				html += '		<div class="desc">Add a description of the image here</div>'
 				html += '	</div>'
 				html += '</div>'
