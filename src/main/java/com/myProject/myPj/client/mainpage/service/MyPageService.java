@@ -16,9 +16,11 @@ public class MyPageService {
     @Autowired
     private MyPageMapper myPageMapper;
 
-    public List<PostVo> getShareTodayPost() {
+    public List<Map<String,Object>> getShareTodayPost(Map<String, Object> paramMap) {
+    	paramMap.put("lastPost", Integer.parseInt((String)paramMap.get("curPage"))*6);
+    	paramMap.put("firstPost", (Integer.parseInt((String)paramMap.get("curPage"))-1)*6);
     	
-        return myPageMapper.getShareTodayPost();
+        return myPageMapper.getShareTodayPost(paramMap);
     }
 
 

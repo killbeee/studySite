@@ -225,7 +225,22 @@
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100" id="cardBody">
 
         </div>
-
+        <div class="dataTables_paginate paging_full_numbers" id="pagination">
+			<ul class="pagination">
+<!--				<li class="paginate_button first disabled" id="dataTable_first">-->
+<!--					<a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0">처음</a>-->
+<!--				</li>-->
+<!--				<li class="paginate_button previous disabled" id="dataTable_previous">-->
+<!--					<a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0">이전</a></li>-->
+				
+<!--				<li class="paginate_button next disabled" id="dataTable_next">-->
+<!--					<a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0">다음</a>-->
+<!--				</li>-->
+<!--				<li class="paginate_button last disabled" id="dataTable_last">-->
+<!--					<a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0">끝</a>-->
+<!--        		</li>-->
+        	</ul>
+        </div>
       </div>
     </section><!-- End Portfolio Section -->
 
@@ -301,32 +316,52 @@
   </main><!-- End #main -->
 
 
-
+	
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 <form id="teleForm">
 	<input name="type" type="hidden" value="">
 	<input id="keyId" name="keyId" type="hidden">
 </form>
+<input type="hidden" id="curPage" name="curPage" value="1">
+<input type="hidden" id="maxPage" name="maxPage" value="">
 <div th:replace="/footScript :: footerS"></div>
 <script>
 $(document).ready(function(){
-	getData();
+	getData(0);
 })
-function getData(){
+function getData(curPage){
 	$.ajax({
 		url: "/client/portfolio/getPost.do"
 		, type : "post"
+		, data : {
+			curPage : $("#curPage").val(), 
+		}
 		, success : function(res) {
+		
 			let html ="";
+			let html2="";
 			for(let i=0 ;i<res.postList.length;i++){
-				html += '<div class="col-lg-4 col-md-6 portfolio-item filter-app" onclick="goDetail(`'+res.postList[i].id+'`)">'
+				html += '<div class="col-lg-4 col-md-6 portfolio-item filter-app" onclick="goDetail(`'+res.postList[i].ID+'`)">'
 				html += '	<div class="portfolio-wrap">'
-				html += '		<img  onerror="this.src=`/common/img/noImg.jpg`" src="/outSource'+res.postList[i].fileList+'" class="img-fluid" alt="" style="width:404px;height:303px">'
-				html += '		<div class="desc">'+res.postList[i].title+'</div>'
+				html += '		<img  onerror="this.src=`/common/img/noImg.jpg`" src="/outSource'+res.postList[i].FILE_LIST+'" class="img-fluid" alt="" style="width:404px;height:303px">'
+				html += '		<div class="desc">'+res.postList[i].TITLE+'</div>'
 				html += '	</div>'
 				html += '</div>'
+				
+				
 			}
-			
+			var chkNum = 0;
+			if(parseInt(res.postList[res.postList.length-1].MAX_COUNT/6) != 0){chkNum = 1};
+			var maxPage = parseInt(res.postList[res.postList.length-1].MAX_COUNT/6) + chkNum;
+			var curPage = parseInt(res.postList[res.postList.length-1].ROWNUM/6) + chkNum-1;
+			$("#curPage").val(curPage);
+			$("#maxPage").val(maxPage);
+			for(let i = 1 ;i<=maxPage; i++){
+				html2 +='<li class="paginate_button active">'
+				html2 +='	<a href="#">'+i+'</a>'
+				html2 +='</li>'
+			}
+			$("#pagination").append(html2);
 			$("#cardBody").append(html);
 		}
 		, erorr: function (err) {

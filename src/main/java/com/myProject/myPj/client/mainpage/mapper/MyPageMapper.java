@@ -11,8 +11,12 @@ import com.myProject.myPj.vo.PostVo;
 @Mapper
 public interface MyPageMapper {
 
-	List<PostVo> getShareTodayPost();
 
 
 	boolean insertPostInfo(Map<String, Object> paramMap);
+
+
+	List<Map<String, Object>> getShareTodayPost(Map<String, Object> paramMap);
+
+
 }

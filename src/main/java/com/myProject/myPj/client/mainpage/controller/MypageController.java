@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,15 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.myProject.myPj.client.mainpage.service.MyPageService;
 import com.myProject.myPj.common.file.service.FileService;
-import com.myProject.myPj.common.mapper.CommonMapper;
 import com.myProject.myPj.common.service.CommonService;
 import com.myProject.myPj.vo.PostVo;
-import com.myProject.myPj.vo.UserVo;
 
 @Controller
 public class MypageController {
@@ -35,14 +33,10 @@ public class MypageController {
     private CommonService commonService;
     
     @RequestMapping(value={"/client/portfolio/getPost.do"})
-    public String getUserList(Model model,HttpServletRequest request) {
-    	 
-    	 List<PostVo> postList =  myPageService.getShareTodayPost();
-    	 //파일을 나눠서 배열에 담은다음 다시 세팅
-//    	 for(int i =0;i<postList.size();i++) {
-//    		 postList.get(i).setFileArr(postList.get(i).getFileList());
-//    	 }
-    	 
+    public String getUserList(@RequestParam Map<String, Object> paramMap,Model model) {
+   
+    	 List<Map<String,Object>> postList =  myPageService.getShareTodayPost(paramMap);
+
          model.addAttribute("postList", postList);
     	
         return "jsonView";

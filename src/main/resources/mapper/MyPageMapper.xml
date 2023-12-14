@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myProject.myPj.client.mainpage.mapper.MyPageMapper">	<!-- mapper 인터페이스가 위치하는 경로 -->
-     <select id="getShareTodayPost" resultType="com.myProject.myPj.vo.PostVo">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
-       SELECT
-       		 *,
-			FT.TRANS_FILE_PATH AS FILE_LIST
-		FROM POST_TABLE PT 
-		left outer join FILE_TABLE FT 
-		on FT.FILE_REFER_KEY = PT.ID
+     <select id="getShareTodayPost" parameterType="java.util.Map" resultType="java.util.Map">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
+       SELECT 
+				*
+	   FROM (
+		       SELECT
+					ROW_NUMBER() OVER (ORDER BY PT.ID) AS ROWNUM,
+				    PT.ID,
+					PT.TITLE,
+					PT.CONTENT,
+					PT.WRITER,
+					PT.VIEW_CNT,
+					PT.NOTICE_YN,
+					PT.DELETE_YN,
+					PT.CREATE_DATE,
+					PT.MODIFIED_DATE,
+					PT.POST_TYPE,
+				    FT.TRANS_FILE_PATH AS FILE_LIST,
+				    (SELECT COUNT(ID) FROM POST_TABLE) AS MAX_COUNT
+				FROM POST_TABLE PT
+				LEFT OUTER JOIN FILE_TABLE FT 
+				ON FT.FILE_REFER_KEY = PT.ID
+			)DT
+		WHERE 
+			DT.ROWNUM BETWEEN #{firstPost} AND #{lastPost}
+			
     </select>
     <insert id="insertPostInfo" parameterType="hashMap">
 		INSERT 
