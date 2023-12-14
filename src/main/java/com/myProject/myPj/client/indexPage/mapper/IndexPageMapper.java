@@ -1,13 +1,12 @@
 package com.myProject.myPj.client.indexPage.mapper;
 
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 
-import com.myProject.myPj.vo.BoardVo;
+import com.myProject.myPj.vo.PostVo;
 
 @Mapper
 public interface IndexPageMapper {
-	 List<BoardVo> getUserList();
+
+	PostVo getPostDetail(String keyId);
 }
