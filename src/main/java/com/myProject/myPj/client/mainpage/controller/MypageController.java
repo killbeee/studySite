@@ -42,16 +42,27 @@ public class MypageController {
         return "jsonView";
      
     }
+    @RequestMapping(value={"/client/portfolio/modifyPost.do"})
+    public String modifyPost(@RequestParam Map<String, Object> paramMap,Model model) {
+    	
+    	 Map<String,Object> post =  myPageService.modifyPost(paramMap);
+
+         model.addAttribute("post", post);
+         model.addAttribute("type", paramMap.get("type"));
+    	
+        return "/postModify.html";
+     
+    }
     @Transactional
     @RequestMapping(value = "/client/portfolio/createToday.do",method = RequestMethod.POST)
     public String createToday(Model model,MultipartHttpServletRequest req,HttpServletRequest request){
-
+    	
     	// Access regular form fields
     	Map<String,Object> paramMap = new HashMap<>();
     	Map<String,Object> resultMap = new HashMap<>();
     	Map<String,String> keyMap = new HashMap<>();
     	boolean suc = false;
-    	
+    	String type = req.getParameter("type");
         String postType = req.getParameter("postType");
         String postTitle = req.getParameter("postTitle");
         String postContent = req.getParameter("postContent");
@@ -60,7 +71,7 @@ public class MypageController {
         keyMap.put("tableName", "POST_TABLE");
         
         String referKey = commonService.getPkId(keyMap);
-        
+        paramMap.put("type", type);
         paramMap.put("postType", postType);
         paramMap.put("postTitle", postTitle);
         paramMap.put("postContent", postContent);

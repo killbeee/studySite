@@ -207,8 +207,13 @@
       <div class="container">
 
         <div class="section-title ">
-          <h2>Study</h2><button onclick="goMovement('submit')">글 등록하기</button>
+          <h2>Study</h2>
           <p>프론트, 백, DB관련 정보를 기입합니다.</p>
+          <div class="ta_r">
+			  <button class="btn btn-sm btn-outline-dark" onclick="goMovement('submit')">글 등록하기</button>
+		  </div>
+          
+          
         </div>
 
         <div class="row" data-aos="fade-up">
@@ -319,6 +324,7 @@ $(document).ready(function(){
 	getData(1,'All');
 })
 function getData(curPage,type){
+	$("#portfolio").focus();
 	let searchSec = type;
 	$.ajax({
 		url: "/client/portfolio/getPost.do"

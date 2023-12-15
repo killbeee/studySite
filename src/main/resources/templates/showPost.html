@@ -40,13 +40,13 @@
 			</form>	
 			<div class="box-footer ta_r">
 				<button type="button" name="list" class="btn btn-outline-secondary" onclick="goBack()">
-					목록
+					<i class="bi bi-list"></i>목록
 				</button>
-				<button type="button" name="list" class="btn btn-outline-secondary bg_lightblue" onclick="goingBack()">
-					수정
+				<button type="button" name="list" class="btn btn-outline-secondary bg_lightblue" th:onclick="goModify([[${postDetail.id}]])" >
+					<i class="bi bi-pencil-square"></i>수정
 				</button>
 				<button type="button" name="list" class="btn btn-outline-secondary bg_lightred" onclick="goingBack()">
-					삭제
+					<i class="bi bi-trash-fill"></i>삭제
 				</button>
 			</div>
         </div>
@@ -71,12 +71,22 @@
 
 </body>
 <div th:replace="/footScript :: footerS"></div>
+<form id="teleForm">
+	<input name="type" type="hidden" value="modify">
+	<input id="keyId" name="keyId" type="hidden">
+</form>
 <script>
 $(document).ready(function(){
 	
 })
 function goBack(){
 	window.location.href="/"
+}
+function goModify(id){
+	$("#keyId").val(id);
+	var url = "/client/portfolio/modifyPost.do";
+	$("#teleForm").attr("action",url);
+	$("#teleForm").submit();
 }
 
 </script>

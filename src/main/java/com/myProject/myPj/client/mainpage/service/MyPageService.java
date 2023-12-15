@@ -38,11 +38,25 @@ public class MyPageService {
     	paramList.add(pagingMap);
         return paramList;
     }
+    public Map<String,Object> modifyPost(Map<String, Object> paramMap) {
+
+    	Map<String,Object> post =  myPageMapper.getPost(paramMap);    	
+
+        return post;
+    }
 
 
 	public boolean insertPostInfo(Map<String, Object> paramMap) {
+		boolean yes = true;
+		if(paramMap.get("type").equals("modify")) {
+			yes = myPageMapper.updatePostInfo(paramMap);
+		}else {
+			yes =  myPageMapper.insertPostInfo(paramMap);
+		}
 		
-		return myPageMapper.insertPostInfo(paramMap);
+		
+		
+		return yes;
 	}
     
 }

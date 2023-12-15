@@ -25,20 +25,19 @@
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details" class="portfolio-details">
       <div class="container">
-
         <div class="row gy-4">
 			<form id="uploadForm" enctype="multipart/form-data">
-				<input type="hidden" name="type" value="reg">
+				<input type="hidden" name="type" value="modify">
 				<div class="col-lg-10 mx-auto">
 				    <h1 class="fw-bolder mb-1 fontKortraDefault">오늘은 뭘 공부했느냐..</h1><br>
 				     <select class="form-control" name="postType">
-						<option value="front">Front</option>
-						<option value="back">Back</option>
-						<option value="db">DB</option>						
+						<option th:selected="${post.POST_TYPE} == 'front'" value="front">Front</option>
+						<option th:selected="${post.POST_TYPE} == 'back'" value="back">Back</option>
+						<option th:selected="${post.POST_TYPE} == 'db'" value="db">DB</option>						
 					</select>
-					<input type="text" class="form-control border-3" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요" required=""><br>
+					<input type="text" class="form-control border-3" name="postTitle" id="postTitle" th:value="${post.TITLE}" placeholder="제목을 입력해주세요" required=""><br>
 					<input type="hidden" name="postContent" id="hiddenContent">
-                    <div id="postContent"></div>
+                    <div id="postContent" th:utext="${post.CONTENT}"></div>
                     <p>미리보기 이미지 업로드</p><hr>
                    	<!--파일 업로드 부분(미리보기)-->
                     <div style="display: inline;">

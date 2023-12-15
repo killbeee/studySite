@@ -58,4 +58,36 @@
 			)
 		
 	</insert>
+	     <select id="getPost" parameterType="java.util.Map" resultType="java.util.Map">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
+		      SELECT
+		            COUNT(ID) OVER() AS MAX_COUNT,
+		            ROW_NUMBER() OVER(ORDER BY PT.ID DESC) AS ROWNUM,
+		       		PT.ID,
+					PT.TITLE,
+					PT.CONTENT,
+					PT.WRITER,
+					PT.VIEW_CNT,
+					PT.NOTICE_YN,
+					PT.DELETE_YN,
+					PT.CREATE_DATE,
+					PT.MODIFIED_DATE,
+					PT.POST_TYPE,
+				    FT.TRANS_FILE_PATH AS FILE_LIST
+		        FROM POST_TABLE PT
+						LEFT OUTER JOIN FILE_TABLE FT 
+						ON FT.FILE_REFER_KEY = PT.ID
+				WHERE 
+					PT.ID = #{keyId}
+
+    </select>
+   <update id="updatePostInfo" parameterType="hashMap">
+		UPDATE POST_TABLE
+			SET
+			    TITLE = #{postTitle},
+			    CONTENT = #{postContent},
+			    POST_TYPE = #{postType},
+			    MODIFIED_DATE = NOW()
+			WHERE
+			    ID = #{id}
+	</update>
 </mapper>
