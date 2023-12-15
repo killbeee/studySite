@@ -206,7 +206,7 @@
     <section id="portfolio" class="portfolio section-bg">
       <div class="container">
 
-        <div class="section-title">
+        <div class="section-title ">
           <h2>Study</h2><button onclick="goMovement('submit')">글 등록하기</button>
           <p>프론트, 백, DB관련 정보를 기입합니다.</p>
         </div>
@@ -334,7 +334,7 @@ function getData(curPage,type){
 				html += '<div class="col-lg-4 col-md-6 portfolio-item" onclick="goDetail(`'+res.postList[i].ID+'`)">'
 				html += '	<div class="portfolio-wrap">'
 				html += '		<img  onerror="this.src=`/common/img/noImg.jpg`" src="/outSource'+res.postList[i].FILE_LIST+'" class="img-fluid" alt="" style="width:404px;height:303px">'
-				html += '		<div class="desc">'+res.postList[i].TITLE+'</div>'
+				html += '		<div class="desc"><b>['+res.postList[i].POST_TYPE.toUpperCase()+']  </b>'+res.postList[i].TITLE+'</div>'
 				html += '	</div>'
 				html += '</div>'
 				
