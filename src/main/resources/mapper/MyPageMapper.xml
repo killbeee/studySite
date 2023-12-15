@@ -2,12 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myProject.myPj.client.mainpage.mapper.MyPageMapper">	<!-- mapper 인터페이스가 위치하는 경로 -->
      <select id="getShareTodayPost" parameterType="java.util.Map" resultType="java.util.Map">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
-       SELECT 
-				*
-	   FROM (
-		       SELECT
-					ROW_NUMBER() OVER (ORDER BY PT.ID) AS ROWNUM,
-				    PT.ID,
+       SELECT
+		    TT.*
+		FROM
+		    ( 
+		        SELECT
+		            COUNT(ID) OVER() AS MAX_COUNT,
+		            ROW_NUMBER() OVER(ORDER BY PT.ID DESC) AS ROWNUM,
+		       		PT.ID,
 					PT.TITLE,
 					PT.CONTENT,
 					PT.WRITER,
@@ -17,14 +19,18 @@
 					PT.CREATE_DATE,
 					PT.MODIFIED_DATE,
 					PT.POST_TYPE,
-				    FT.TRANS_FILE_PATH AS FILE_LIST,
-				    (SELECT COUNT(ID) FROM POST_TABLE) AS MAX_COUNT
-				FROM POST_TABLE PT
-				LEFT OUTER JOIN FILE_TABLE FT 
-				ON FT.FILE_REFER_KEY = PT.ID
-			)DT
-		WHERE 
-			DT.ROWNUM BETWEEN #{firstIndex}+1 AND #{lastIndex}
+				    FT.TRANS_FILE_PATH AS FILE_LIST
+		        FROM POST_TABLE PT
+						LEFT OUTER JOIN FILE_TABLE FT 
+						ON FT.FILE_REFER_KEY = PT.ID
+		        WHERE 1=1
+		        <if test="searchSec != 'All'">
+		      	  AND  PT.POST_TYPE = #{searchSec}
+		        </if>
+		    ) TT
+		WHERE
+		    TT.ROWNUM BETWEEN #{firstIndex}+1 AND #{lastIndex}
+		ORDER BY TT.ROWNUM	  
 			
     </select>
     <insert id="insertPostInfo" parameterType="hashMap">

@@ -214,15 +214,15 @@
         <div class="row" data-aos="fade-up">
           <div class="col-lg-12 d-flex justify-content-center">
             <ul id="portfolio-flters">
-              <li class="filter-active">All</li>
-              <li>FRONT</li>
-              <li>BACK</li>
-              <li>DB</li>
+              <li onclick="getData(1,'All')" class="filter-active">All</li>
+              <li onclick="getData(1,'front')" >FRONT</li>
+              <li onclick="getData(1,'back')">BACK</li>
+              <li onclick="getData(1,'db')">DB</li>
             </ul>
           </div>
         </div>
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100" id="cardBody">
+        <div class="row portfolio-container" data-aos="fade-up" style="height: auto;" data-aos-delay="100" id="cardBody">
 
         </div>
         <div class="dataTables_paginate paging_full_numbers">
@@ -316,21 +316,22 @@
 <div th:replace="/footScript :: footerS"></div>
 <script>
 $(document).ready(function(){
-	getData(1);
+	getData(1,'All');
 })
-function getData(curPage){
+function getData(curPage,type){
+	let searchSec = type;
 	$.ajax({
 		url: "/client/portfolio/getPost.do"
 		, type : "post"
 		, data : {
 			currentPageNo : curPage,
+			searchSec : searchSec,
 		}
 		, success : function(res) {
-			debugger;
 			let html ="";
 			let html2="";
 			for(let i=0 ;i<res.postList.length-1;i++){
-				html += '<div class="col-lg-4 col-md-6 portfolio-item filter-app" onclick="goDetail(`'+res.postList[i].ID+'`)">'
+				html += '<div class="col-lg-4 col-md-6 portfolio-item" onclick="goDetail(`'+res.postList[i].ID+'`)">'
 				html += '	<div class="portfolio-wrap">'
 				html += '		<img  onerror="this.src=`/common/img/noImg.jpg`" src="/outSource'+res.postList[i].FILE_LIST+'" class="img-fluid" alt="" style="width:404px;height:303px">'
 				html += '		<div class="desc">'+res.postList[i].TITLE+'</div>'
@@ -343,20 +344,21 @@ function getData(curPage){
 			var pagingVo = res.postList[res.postList.length-1].pagingVo;
 			//일단 페이징 for문 돌려
 			if(pagingVo.currentPageNo != 1){
-				html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo - 1) + ')">Previous</a></li>';
+				html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo - 1) + ',`'+type+'`)">Previous</a></li>';
 			}else{
 				html2 += '<li class="page-item"><a class="page-link font_white bg_gray">Previous</a></li>';
 			}	
 			for(let i = pagingVo.firstPageNoOnPageList;i<=pagingVo.lastPageNoOnPageList;i++){
 				if(pagingVo.currentPageNo == i){
-					html2 += ' <li class="page-item "><a class="page-link bg_lightnavy font_white" href="javascript:getData('+i+')">'+i+'</a></li>' 
+					html2 += ' <li class="page-item "><a class="page-link bg_lightnavy font_white" href="javascript:getData('+i+',`'+type+'`)">'+i+'</a></li>' 
 				}else{
-					html2 += ' <li class="page-item"><a class="page-link" href="javascript:getData('+i+')">'+i+'</a></li>' 
+					html2 += ' <li class="page-item"><a class="page-link" href="javascript:getData('+i+',`'+type+'`)">'+i+'</a></li>' 
 				}
 			}
-			html2 += '<li class="page-item"><a class="page-link" href="javascript:getData('+pagingVo.firstPageNoOnPageList+1+')">Next</a></li>'
+			html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo + 1) + ',`'+type+'`)">Next</a></li>'
 			$("#pagination").html(html2);
 			$("#cardBody").html(html);
+			$("#cardBody").css('height', 'auto');
 		}
 		, erorr: function (err) {
 			
