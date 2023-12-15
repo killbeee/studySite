@@ -24,7 +24,7 @@
 				ON FT.FILE_REFER_KEY = PT.ID
 			)DT
 		WHERE 
-			DT.ROWNUM BETWEEN #{firstPost} AND #{lastPost}
+			DT.ROWNUM BETWEEN #{firstIndex}+1 AND #{lastIndex}
 			
     </select>
     <insert id="insertPostInfo" parameterType="hashMap">

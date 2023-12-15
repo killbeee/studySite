@@ -225,21 +225,12 @@
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100" id="cardBody">
 
         </div>
-        <div class="dataTables_paginate paging_full_numbers" id="pagination">
-			<ul class="pagination">
-<!--				<li class="paginate_button first disabled" id="dataTable_first">-->
-<!--					<a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0">처음</a>-->
-<!--				</li>-->
-<!--				<li class="paginate_button previous disabled" id="dataTable_previous">-->
-<!--					<a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0">이전</a></li>-->
-				
-<!--				<li class="paginate_button next disabled" id="dataTable_next">-->
-<!--					<a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0">다음</a>-->
-<!--				</li>-->
-<!--				<li class="paginate_button last disabled" id="dataTable_last">-->
-<!--					<a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0">끝</a>-->
-<!--        		</li>-->
-        	</ul>
+        <div class="dataTables_paginate paging_full_numbers">
+        	<nav aria-label="Page navigation example">
+			  <ul id="pagination" class="pagination ta_c" style="justify-content: center;">
+			    
+			  </ul>
+			</nav>
         </div>
       </div>
     </section><!-- End Portfolio Section -->
@@ -322,25 +313,23 @@
 	<input name="type" type="hidden" value="">
 	<input id="keyId" name="keyId" type="hidden">
 </form>
-<input type="hidden" id="curPage" name="curPage" value="1">
-<input type="hidden" id="maxPage" name="maxPage" value="">
 <div th:replace="/footScript :: footerS"></div>
 <script>
 $(document).ready(function(){
-	getData(0);
+	getData(1);
 })
 function getData(curPage){
 	$.ajax({
 		url: "/client/portfolio/getPost.do"
 		, type : "post"
 		, data : {
-			curPage : $("#curPage").val(), 
+			currentPageNo : curPage,
 		}
 		, success : function(res) {
-		
+			debugger;
 			let html ="";
 			let html2="";
-			for(let i=0 ;i<res.postList.length;i++){
+			for(let i=0 ;i<res.postList.length-1;i++){
 				html += '<div class="col-lg-4 col-md-6 portfolio-item filter-app" onclick="goDetail(`'+res.postList[i].ID+'`)">'
 				html += '	<div class="portfolio-wrap">'
 				html += '		<img  onerror="this.src=`/common/img/noImg.jpg`" src="/outSource'+res.postList[i].FILE_LIST+'" class="img-fluid" alt="" style="width:404px;height:303px">'
@@ -350,19 +339,24 @@ function getData(curPage){
 				
 				
 			}
-			var chkNum = 0;
-			if(parseInt(res.postList[res.postList.length-1].MAX_COUNT/6) != 0){chkNum = 1};
-			var maxPage = parseInt(res.postList[res.postList.length-1].MAX_COUNT/6) + chkNum;
-			var curPage = parseInt(res.postList[res.postList.length-1].ROWNUM/6) + chkNum-1;
-			$("#curPage").val(curPage);
-			$("#maxPage").val(maxPage);
-			for(let i = 1 ;i<=maxPage; i++){
-				html2 +='<li class="paginate_button active">'
-				html2 +='	<a href="#">'+i+'</a>'
-				html2 +='</li>'
+			
+			var pagingVo = res.postList[res.postList.length-1].pagingVo;
+			//일단 페이징 for문 돌려
+			if(pagingVo.currentPageNo != 1){
+				html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo - 1) + ')">Previous</a></li>';
+			}else{
+				html2 += '<li class="page-item"><a class="page-link font_white bg_gray">Previous</a></li>';
+			}	
+			for(let i = pagingVo.firstPageNoOnPageList;i<=pagingVo.lastPageNoOnPageList;i++){
+				if(pagingVo.currentPageNo == i){
+					html2 += ' <li class="page-item "><a class="page-link bg_lightnavy font_white" href="javascript:getData('+i+')">'+i+'</a></li>' 
+				}else{
+					html2 += ' <li class="page-item"><a class="page-link" href="javascript:getData('+i+')">'+i+'</a></li>' 
+				}
 			}
-			$("#pagination").append(html2);
-			$("#cardBody").append(html);
+			html2 += '<li class="page-item"><a class="page-link" href="javascript:getData('+pagingVo.firstPageNoOnPageList+1+')">Next</a></li>'
+			$("#pagination").html(html2);
+			$("#cardBody").html(html);
 		}
 		, erorr: function (err) {
 			
