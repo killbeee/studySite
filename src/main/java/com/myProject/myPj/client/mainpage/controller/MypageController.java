@@ -69,8 +69,13 @@ public class MypageController {
         
         keyMap.put("alias", "PT");
         keyMap.put("tableName", "POST_TABLE");
-        
-        String referKey = commonService.getPkId(keyMap);
+        String referKey = "";
+        if(type.equals("modify")) {
+        	referKey = (String) req.getParameter("id");
+		}else {
+			referKey =  commonService.getPkId(keyMap);
+		}
+
         paramMap.put("type", type);
         paramMap.put("postType", postType);
         paramMap.put("postTitle", postTitle);
