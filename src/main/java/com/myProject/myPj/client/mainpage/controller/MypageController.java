@@ -106,4 +106,13 @@ public class MypageController {
         
         return "jsonView";
     }
+    
+    @RequestMapping(value={"/client/portfolio/deletePost.do"})
+    public String deletePost(@RequestParam Map<String, Object> paramMap,Model model) {
+    	
+    	myPageService.deletePost(paramMap);
+    	
+        return "/index.html";
+     
+    }
 }

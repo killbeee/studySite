@@ -44,7 +44,10 @@ public class MyPageService {
 
         return post;
     }
+    public void deletePost(Map<String, Object> paramMap) {
 
+    	myPageMapper.deletePost(paramMap);    	
+    }
 
 	public boolean insertPostInfo(Map<String, Object> paramMap) {
 		boolean yes = true;

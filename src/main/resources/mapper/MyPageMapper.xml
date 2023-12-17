@@ -90,4 +90,10 @@
 			WHERE
 			    ID = #{id}
 	</update>
+	  <delete id="deletePost" parameterType="hashMap">
+		DELETE 
+				FROM POST_TABLE
+		WHERE
+			    ID = #{keyId}
+	</delete>
 </mapper>

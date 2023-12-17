@@ -50,7 +50,7 @@
               <div class="col-lg-6">
                 <ul>
                   <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>3 March 1996</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>www.rong3531.synology.me:4700/</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span><a href="http://www.brightDev.info">www.brightDev.info</a></span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>KakoTalk:</strong> <span>lsrong</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>성남, 대한민국</span></li>
                 </ul>
@@ -308,9 +308,15 @@
         </div>
 
       </div>
-    </section><!-- End Contact Section -->
-  </main><!-- End #main -->
-
+    </section>
+  </main>
+	<footer id="footer">
+    <div class="container">
+	  <div class="copyright">
+        <strong><span>로그인</span></strong>
+      </div>
+    </div>
+  </footer>
 
 	
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -339,7 +345,7 @@ function getData(curPage,type){
 			for(let i=0 ;i<res.postList.length-1;i++){
 				html += '<div class="col-lg-4 col-md-6 portfolio-item" onclick="goDetail(`'+res.postList[i].ID+'`)">'
 				html += '	<div class="portfolio-wrap">'
-				html += '		<img  onerror="this.src=`/common/img/noImg.jpg`" src="/outSource'+res.postList[i].FILE_LIST+'" class="img-fluid" alt="" style="width:404px;height:303px">'
+				html += '		<img  onerror="this.src=`/common/img/noImg.jpg`" src="/outSource'+res.postList[i].FILE_LIST+'" class="portfolioImg img-fluid" alt="" style="width:404px;height:303px">'
 				html += '		<div class="desc"><b>['+res.postList[i].POST_TYPE.toUpperCase()+']  </b>'+res.postList[i].TITLE+'</div>'
 				html += '	</div>'
 				html += '</div>'

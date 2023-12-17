@@ -21,5 +21,7 @@ public interface MyPageMapper {
 	
 	Map<String, Object> getPost(Map<String, Object> paramMap);
 
+	void deletePost(Map<String, Object> paramMap);
+
 
 }

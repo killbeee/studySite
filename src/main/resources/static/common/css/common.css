@@ -672,3 +672,11 @@
 		padding-left: 15px; padding-right: 15px;
 	}
 }
+
+
+/*이미지 속성*/
+.portfolioImg{
+	border-style: solid;
+	border-radius: 20px;
+	border-color: snow;
+}

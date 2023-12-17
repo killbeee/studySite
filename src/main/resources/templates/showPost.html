@@ -45,7 +45,7 @@
 				<button type="button" name="list" class="btn btn-outline-secondary bg_lightblue" th:onclick="goModify([[${postDetail.id}]])" >
 					<i class="bi bi-pencil-square"></i>수정
 				</button>
-				<button type="button" name="list" class="btn btn-outline-secondary bg_lightred" onclick="goingBack()">
+				<button type="button" name="list" class="btn btn-outline-secondary bg_lightred" th:onclick="changeDelYn([[${postDetail.id}]])">
 					<i class="bi bi-trash-fill"></i>삭제
 				</button>
 			</div>
@@ -88,6 +88,12 @@ function goModify(id){
 	$("#teleForm").attr("action",url);
 	$("#teleForm").submit();
 }
-
+function changeDelYn(id){
+	debugger;
+	$("#keyId").val(id);
+	var url = "/client/portfolio/deletePost.do";
+	$("#teleForm").attr("action",url);
+	$("#teleForm").submit();
+}
 </script>
 </html>
