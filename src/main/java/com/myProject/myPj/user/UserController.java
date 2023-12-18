@@ -39,13 +39,13 @@ public class UserController {
                 	HttpSession session = (HttpSession)request.getSession();	
                 	session.setAttribute("UserVo", checkUser);
 
-                	return "/client/index.html";
+                	return "/index.html";
                 }
 				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-            	return "/client/index.html";
+            	return "/index.html";
 			}
             
             
@@ -53,40 +53,40 @@ public class UserController {
             
     }
     
-    @SuppressWarnings("unused")
-    @GetMapping("/naver/callback")
-    public String  naverCallback(ModelMap model,@RequestParam String code,HttpServletRequest request) {
-    		ModelAndView mv = new ModelAndView();
-            String access_Token = userService.getNaverAccessToken(code);
-            UserVo userVo = userService.getNaverUserInfo(access_Token,code);
-            
-            String id = String.valueOf(userVo.getSocialUserId());
-            UserVo checkUser = userService.getUser(id);
-            try {
-            	if(checkUser == null) {
-                	model.addAttribute("socialUserId",id);
-                	model.addAttribute("userName", userVo.getUserName());
-                	model.addAttribute("userEmail", userVo.getUserEmail());
-                	model.addAttribute("applyType", "naver");
-                	
-                	return "/common/register.html";
-                }else {
-                	HttpSession session = (HttpSession)request.getSession();	
-                	session.setAttribute("UserVo", checkUser);
-
-                	return "/client/index.html";
-                }
-				
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-            	return "/client/index.html";
-			}
-            
-            
-            
-            
-    }
+//    @SuppressWarnings("unused")
+//    @GetMapping("/naver/callback")
+//    public String  naverCallback(ModelMap model,@RequestParam String code,HttpServletRequest request) {
+//    		ModelAndView mv = new ModelAndView();
+//            String access_Token = userService.getNaverAccessToken(code);
+//            UserVo userVo = userService.getNaverUserInfo(access_Token,code);
+//            
+//            String id = String.valueOf(userVo.getSocialUserId());
+//            UserVo checkUser = userService.getUser(id);
+//            try {
+//            	if(checkUser == null) {
+//                	model.addAttribute("socialUserId",id);
+//                	model.addAttribute("userName", userVo.getUserName());
+//                	model.addAttribute("userEmail", userVo.getUserEmail());
+//                	model.addAttribute("applyType", "naver");
+//                	
+//                	return "/common/register.html";
+//                }else {
+//                	HttpSession session = (HttpSession)request.getSession();	
+//                	session.setAttribute("UserVo", checkUser);
+//
+//                	return "/client/index.html";
+//                }
+//				
+//				
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//            	return "/client/index.html";
+//			}
+//            
+//            
+//            
+//            
+//    }
     @RequestMapping("/logout.do")
 	public String logout(HttpServletRequest request) {
 		//세션을 삭제
@@ -95,13 +95,13 @@ public class UserController {
 		if(session != null) {
 			session.invalidate();
 		}
-		return "client/index.html";
+		return "/index.html";
 	}
-    @RequestMapping("/registeration")
-	public String goRegisteration(UserVo userVo) {
-		userService.regRegisteration(userVo);
-    	
-    	
-		return "client/index.html";
-	}
+//    @RequestMapping("/registeration")
+//	public String goRegisteration(UserVo userVo) {
+//		userService.regRegisteration(userVo);
+//    	
+//    	
+//		return "client/index.html";
+//	}
 }

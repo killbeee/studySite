@@ -209,7 +209,7 @@
         <div class="section-title ">
           <h2>Study</h2>
           <p>프론트, 백, DB관련 정보를 기입합니다.</p>
-          <div class="ta_r">
+          <div class="ta_r" th:if="${session.UserVo} != null">
 			  <button class="btn btn-sm btn-outline-dark" onclick="goMovement('submit')">글 등록하기</button>
 		  </div>
           
@@ -312,8 +312,11 @@
   </main>
 	<footer id="footer">
     <div class="container">
-	  <div class="copyright">
-        <strong><span>로그인</span></strong>
+	  <div class="copyright" id="logOut" th:if="${session.UserVo} != null">
+        <strong ><span>[[${session.UserVo.userNick}]]님 반갑습니다. 로그아웃 버튼입니다.</span></strong>
+      </div>
+      <div class="copyright" id="kakaoBtn" th:if="${session.UserVo} == null">
+        <strong ><span>관리자 로그인</span></strong>
       </div>
     </div>
   </footer>
@@ -393,6 +396,13 @@ function goDetail(keyId){
 	$("#teleForm").submit();
 }
 
+$("#kakaoBtn").click(function(){
+	//window.location="https://kauth.kakao.com/oauth/authorize?client_id=824cabc1a0ddf96e8395db33ea0399fd&redirect_uri=http://rong3531.synology.me:4700/kakao/callback&response_type=code";
+	window.location="https://kauth.kakao.com/oauth/authorize?client_id=824cabc1a0ddf96e8395db33ea0399fd&redirect_uri=http://localhost:8081/kakao/callback&response_type=code";
+});
+$("#logOut").click(function(){
+	window.location="/logout.do";
+});
 </script>
 
 </body>
