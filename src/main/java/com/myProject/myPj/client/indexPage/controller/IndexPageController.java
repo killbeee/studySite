@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.myProject.myPj.client.indexPage.service.IndexPageService;
 import com.myProject.myPj.vo.PostVo;
+import com.myProject.myPj.vo.ReplyVo;
 
 @Controller
 public class IndexPageController {
@@ -36,7 +37,9 @@ public class IndexPageController {
     @RequestMapping("/post/showPost.do")
     public String showPost(@RequestParam String keyId, Model model) { 
     	PostVo postDetail = indexPageService.getPostDetail(keyId);
+    	ReplyVo replyDetail = indexPageService.getReplyDetail(keyId);
     	model.addAttribute("postDetail", postDetail);
+    	model.addAttribute("replyDetail", replyDetail);
         return "showPost.html";
     }
     

@@ -51,15 +51,14 @@ public class MyPageService {
 
 	public boolean insertPostInfo(Map<String, Object> paramMap) {
 		boolean yes = true;
-		if(paramMap.get("type").equals("modify")) {
-			yes = myPageMapper.updatePostInfo(paramMap);
-		}else {
-			yes =  myPageMapper.insertPostInfo(paramMap);
-		}
-		
-		
-		
+		yes = myPageMapper.insertPostInfo(paramMap);
+
 		return yes;
 	}
-    
+	public boolean insertReply(Map<String, Object> paramMap) {
+		boolean yes = true;
+		yes = myPageMapper.insertReply(paramMap);
+
+		return yes;
+	}
 }

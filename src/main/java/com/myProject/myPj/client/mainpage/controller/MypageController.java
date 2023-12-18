@@ -113,6 +113,14 @@ public class MypageController {
     	myPageService.deletePost(paramMap);
     	
         return "/index.html";
-     
     }
+    @Transactional
+    @RequestMapping(value = "/client/portfolio/addReply.do",method = RequestMethod.POST)
+    public String addReply(Model model,@RequestParam Map<String, Object> paramMap){
+    	Boolean checkSuc = false;
+    	checkSuc = myPageService.insertReply(paramMap);
+        model.addAttribute("checkSuc", checkSuc);
+        return "jsonView";
+    }
+    
 }

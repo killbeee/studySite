@@ -16,6 +16,8 @@ public interface MyPageMapper {
 	boolean insertPostInfo(Map<String, Object> paramMap);
 
 	boolean updatePostInfo(Map<String, Object> paramMap);
+	
+	boolean insertReply(Map<String, Object> paramMap);
 
 	List<Map<String, Object>> getShareTodayPost(Map<String, Object> paramMap);
 	

@@ -56,7 +56,6 @@
 				,NOW()
 				,#{postType}						
 			)
-		
 	</insert>
 	     <select id="getPost" parameterType="java.util.Map" resultType="java.util.Map">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
 		      SELECT
@@ -96,4 +95,24 @@
 		WHERE
 			    ID = #{keyId}
 	</delete>
+	<insert id="insertReply" parameterType="hashMap">
+		INSERT 
+			INTO POST_REPLY_TABLE(
+				REPLY_KEY_ID,
+				POST_REFER_KEY_ID,
+				REPLY_CONTENT,
+				REG_ID,
+				REG_DATE,
+				REPLY_DEPTH,
+				PASSWORD
+			)VALUES(
+				FN_GET_PK('PRT','POST_REPLY_TABLE')
+				,#{keyId}
+				,#{replyCont}
+				,#{userId}
+				,DATE_FORMAT(now(), '%Y-%m-%d %H:%i')
+				,'1'
+				,#{password}						
+			)
+	</insert>
 </mapper>

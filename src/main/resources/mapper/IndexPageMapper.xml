@@ -9,4 +9,18 @@
 		WHERE 
 				ID = #{keyId}
 	</select>
+	<select id="getReplyDetail" parameterType="String" resultType="com.myProject.myPj.vo.ReplyVo">
+		SELECT 
+				REPLY_KEY_ID,
+				POST_REFER_KEY_ID,
+				REPLY_CONTENT,
+				REG_ID,
+				REG_DATE,
+				REPLY_DEPTH,
+				PASSWORD
+		FROM 
+				POST_REPLY_TABLE PRT
+		WHERE 
+				PRT.POST_REFER_KEY_ID = #{keyId}
+	</select>
 </mapper>

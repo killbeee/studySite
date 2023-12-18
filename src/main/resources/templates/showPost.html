@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <div th:replace="/headerS :: headerS"></div>
-
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <body>
   <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
   <div th:replace="/headerDetail :: header"></div>
@@ -49,10 +49,43 @@
 					<i class="bi bi-trash-fill"></i>삭제
 				</button>
 			</div>
+				<form id="replyForm" method="post"> 
+				<textarea class="form-control" name="replyCont" style="resize: none;"></textarea>
+				<div class="row">
+					<div class="col-lg-2 ta_r pd_t10" >
+						<input value=""  name="userId" class="form-control wd_100 dp_inline input-sm" placeholder="이름">
+						<input type="hidden" name="keyId" th:value="${postDetail.id}">
+						<input type="password" name="password" value="" class="form-control wd_100 dp_inline input-sm" placeholder="비밀번호">
+						<button type="button" style="margin-right: -20px;"  class="btn btn-sm btn-outline-secondary " onclick="addReply()">
+							<i class="bi bi-arrow-up-square-fill"></i>등록
+						</button>
+					</div>
+				</div>
+				</form>
+			<!--commentSection-->
+			<th:bloc th:if="${replyDetail} != null" th:each="list:${replyDetail}">
+					<article class="comment pd_t20">
+				      <a class="comment-img" href="#non">
+				        <img src="/common/img/noHead.png" alt="" width="50" height="50">
+				      </a>
+				      <div class="comment-body">
+				        <div class="text">
+				          <p>[[${list.replyContent}]]</p>
+				        </div>
+				        <p class="attribution">by <a href="#non">[[${list.regId}]]</a>   [[${#dates.format(list.regDate, 'yyyy-MMM-dd일 HH:mm')}]] , [[${list.betweenTime}]]</p>
+				      </div>
+				    </article>				
+			</th:bloc>
         </div>
-        
+ 
       </div>
+
     </section>
+    <!--덧글 폼-->
+
+
+				
+		
   </main>
 						
 
@@ -94,6 +127,23 @@ function changeDelYn(id){
 	var url = "/client/portfolio/deletePost.do";
 	$("#teleForm").attr("action",url);
 	$("#teleForm").submit();
+}
+function addReply(){
+	debugger;
+    var data = $("#replyForm").serialize();
+    var url = "/client/portfolio/addReply.do";
+    $.ajax({
+        url: url, // Fix the URL variable
+        data: data,
+        dataType:"json",
+        type: "POST",
+        success: function() {
+
+	    },
+	    error: function(e) {
+	        console.log(e);
+	    }
+    })
 }
 </script>
 </html>
