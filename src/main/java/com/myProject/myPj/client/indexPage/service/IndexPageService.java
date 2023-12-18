@@ -1,6 +1,8 @@
 package com.myProject.myPj.client.indexPage.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +23,14 @@ public class IndexPageService {
     	return postDetail;
     }
     
-    public ReplyVo getReplyDetail(String keyId) {
-    	ReplyVo replyDetail = null;
+    public List<ReplyVo> getReplyDetail(String keyId) {
+    	List<ReplyVo> replyDetail = null;
     	replyDetail = indexPageMapper.getReplyDetail(keyId);
     	if(replyDetail != null) {
-    		replyDetail.getBetweenTime();
+    		for(ReplyVo vo : replyDetail) {
+    			vo.getBetweenTime();
+    		}
+    		
     	}
     	
     	return replyDetail;

@@ -27,55 +27,63 @@
       <div class="container">
 
         <div class="row gy-4">
-			<form id="uploadForm" enctype="multipart/form-data">
-				<div class="col-lg-10 mx-auto">
-				    <h1 class="fw-bolder mb-1 fontKortraDefault">[ [[${postDetail.postType}]] ] [[${postDetail.title}]]</h1>
+			
+			<div class="col-lg-10 mx-auto">
+				<form id="uploadForm" enctype="multipart/form-data">
+				   <h1 class="fw-bolder mb-1 fontKortraDefault">[ [[${postDetail.postType}]] ] [[${postDetail.title}]]</h1>
 					<p class="ta_r">[[${postDetail.createDate}]]</p>
-				    <hr>
-                    <div id="postContent">
+				   <hr>
+                   <div id="postContent">
 						[(${postDetail.content})]
-					</div>
-                    <hr>
-				</div>  		    
-			</form>	
-			<div class="box-footer ta_r">
-				<button type="button" name="list" class="btn btn-outline-secondary" onclick="goBack()">
-					<i class="bi bi-list"></i>목록
-				</button>
-				<button type="button" name="list" class="btn btn-outline-secondary bg_lightblue" th:onclick="goModify([[${postDetail.id}]])" >
-					<i class="bi bi-pencil-square"></i>수정
-				</button>
-				<button type="button" name="list" class="btn btn-outline-secondary bg_lightred" th:onclick="changeDelYn([[${postDetail.id}]])">
-					<i class="bi bi-trash-fill"></i>삭제
-				</button>
-			</div>
+				   </div>          
+                </form>	   
+                <div class="box-footer ta_r">
+					<button type="button" name="list" class="btn btn-outline-secondary" onclick="goBack()">
+						<i class="bi bi-list"></i>목록
+					</button>
+					<button type="button" name="list" class="btn btn-outline-secondary bg_lightblue" th:onclick="goModify([[${postDetail.id}]])" >
+						<i class="bi bi-pencil-square"></i>수정
+					</button>
+					<button type="button" name="list" class="btn btn-outline-secondary bg_lightred" th:onclick="changeDelYn([[${postDetail.id}]])">
+						<i class="bi bi-trash-fill"></i>삭제
+					</button>
+				</div>
+				<hr>
+			</div>  		    
+			
+			<div class="row">
+				<div class="col-lg-10 mx-auto">
 				<form id="replyForm" method="post"> 
 				<textarea class="form-control" name="replyCont" style="resize: none;"></textarea>
-				<div class="row">
-					<div class="col-lg-2 ta_r pd_t10" >
-						<input value=""  name="userId" class="form-control wd_100 dp_inline input-sm" placeholder="이름">
+					<div class="pd_t10 ta_r" >
 						<input type="hidden" name="keyId" th:value="${postDetail.id}">
+						<input value=""  name="userId" class="form-control wd_100 dp_inline input-sm" placeholder="이름">	
 						<input type="password" name="password" value="" class="form-control wd_100 dp_inline input-sm" placeholder="비밀번호">
-						<button type="button" style="margin-right: -20px;"  class="btn btn-sm btn-outline-secondary " onclick="addReply()">
+						<button type="button" style="margin-right: -20px;"  class="btn btn-md btn-outline-secondary " onclick="addReply()">
 							<i class="bi bi-arrow-up-square-fill"></i>등록
 						</button>
 					</div>
-				</div>
 				</form>
+				</div>
+			</div>	
 			<!--commentSection-->
 			<th:bloc th:if="${replyDetail} != null" >
 				<th:bloc th:each="list:${replyDetail}">
-					<article class="comment pd_t20">
-				      <a class="comment-img" href="#non">
-				        <img src="/common/img/noHead.png" alt="" width="50" height="50">
-				      </a>
-				      <div class="comment-body">
-				        <div class="text">
-				          <p>[[${list.replyContent}]]</p>
-				        </div>
-				        <p class="attribution">by <a href="#non">[[${list.regId}]]</a>   [[${#dates.format(list.regDate, 'yyyy-MMM-dd일 HH:mm')}]] , [[${list.betweenTime}]]</p>
-				      </div>
-				    </article>	
+				<div class="row">
+					<div class="col-lg-10 mx-auto">	
+						<article class="comment pd_t20">
+					      <a class="comment-img" href="#non">
+					        <img src="/common/img/noHead.png" alt="" width="50" height="50">
+					      </a>
+					      <div class="comment-body">
+					        <div class="text">
+					          <p>[[${list.replyContent}]]</p>
+					        </div>
+					        <p class="attribution">by <a href="#non">[[${list.regId}]]</a>   [[${#dates.format(list.regDate, 'yyyy-MMM-dd일 HH:mm')}]] , [[${list.betweenTime}]]</p>
+					      </div>
+					    </article>
+					</div>	    
+				</div>	
 				</th:bloc>    			
 			</th:bloc>
         </div>
@@ -112,7 +120,9 @@
 </form>
 <script>
 $(document).ready(function(){
-	
+	if(isMobile){
+		alert("asd");
+	}
 })
 function goBack(){
 	window.location.href="/"
@@ -131,7 +141,6 @@ function changeDelYn(id){
 	$("#teleForm").submit();
 }
 function addReply(){
-	debugger;
     var data = $("#replyForm").serialize();
     var url = "/client/portfolio/addReply.do";
     $.ajax({

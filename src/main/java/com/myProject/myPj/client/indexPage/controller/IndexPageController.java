@@ -1,6 +1,8 @@
 package com.myProject.myPj.client.indexPage.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +39,7 @@ public class IndexPageController {
     @RequestMapping("/post/showPost.do")
     public String showPost(@RequestParam String keyId, Model model) { 
     	PostVo postDetail = indexPageService.getPostDetail(keyId);
-    	ReplyVo replyDetail = indexPageService.getReplyDetail(keyId);
+    	List<ReplyVo> replyDetail = indexPageService.getReplyDetail(keyId);
     	model.addAttribute("postDetail", postDetail);
     	model.addAttribute("replyDetail", replyDetail);
         return "showPost.html";
