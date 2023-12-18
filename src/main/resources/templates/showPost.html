@@ -63,7 +63,8 @@
 				</div>
 				</form>
 			<!--commentSection-->
-			<th:bloc th:if="${replyDetail} != null" th:each="list:${replyDetail}">
+			<th:bloc th:if="${replyDetail} != null" >
+				<th:bloc th:each="list:${replyDetail}">
 					<article class="comment pd_t20">
 				      <a class="comment-img" href="#non">
 				        <img src="/common/img/noHead.png" alt="" width="50" height="50">
@@ -74,7 +75,8 @@
 				        </div>
 				        <p class="attribution">by <a href="#non">[[${list.regId}]]</a>   [[${#dates.format(list.regDate, 'yyyy-MMM-dd일 HH:mm')}]] , [[${list.betweenTime}]]</p>
 				      </div>
-				    </article>				
+				    </article>	
+				</th:bloc>    			
 			</th:bloc>
         </div>
  

@@ -22,9 +22,12 @@ public class IndexPageService {
     }
     
     public ReplyVo getReplyDetail(String keyId) {
+    	ReplyVo replyDetail = null;
+    	replyDetail = indexPageMapper.getReplyDetail(keyId);
+    	if(replyDetail != null) {
+    		replyDetail.getBetweenTime();
+    	}
     	
-    	ReplyVo replyDetail = indexPageMapper.getReplyDetail(keyId);
-    	replyDetail.getBetweenTime();
     	return replyDetail;
     }
 }
