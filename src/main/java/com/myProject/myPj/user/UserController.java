@@ -28,6 +28,7 @@ public class UserController {
             
             long id = (long) userVo.getSocialUserId();
             UserVo checkUser = userService.getUser(id);
+            System.out.println("요까진 옴 333");
             try {
             	if(checkUser == null) {
                 	model.addAttribute("socialUserId", userVo.getSocialUserId());
@@ -36,7 +37,8 @@ public class UserController {
                 	
                 	return "/common/register.html";
                 }else {
-                	HttpSession session = (HttpSession)request.getSession();	
+                	HttpSession session = (HttpSession)request.getSession();
+                	System.out.println("요까진 옴 111");
                 	session.setAttribute("UserVo", checkUser);
 
                 	return "/index.html";
@@ -45,6 +47,7 @@ public class UserController {
 				
 			} catch (Exception e) {
 				e.printStackTrace();
+				System.out.println("요까진 옴 2222");
             	return "/index.html";
 			}
             
