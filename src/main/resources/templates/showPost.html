@@ -41,10 +41,10 @@
 					<button type="button" name="list" class="btn btn-outline-secondary" onclick="goBack()">
 						<i class="bi bi-list"></i>목록
 					</button>
-					<button type="button" name="list" class="btn btn-outline-secondary bg_lightblue" th:onclick="goModify([[${postDetail.id}]])" >
+					<button type="button" name="list" th:if="${session.UserVo} != null" class="btn btn-outline-secondary bg_lightblue" th:onclick="goModify([[${postDetail.id}]])" >
 						<i class="bi bi-pencil-square"></i>수정
 					</button>
-					<button type="button" name="list" class="btn btn-outline-secondary bg_lightred" th:onclick="changeDelYn([[${postDetail.id}]])">
+					<button type="button" name="list" th:if="${session.UserVo} != null" class="btn btn-outline-secondary bg_lightred" th:onclick="changeDelYn([[${postDetail.id}]])">
 						<i class="bi bi-trash-fill"></i>삭제
 					</button>
 				</div>

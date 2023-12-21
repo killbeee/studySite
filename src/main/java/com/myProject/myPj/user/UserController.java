@@ -1,6 +1,9 @@
 package com.myProject.myPj.user;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +12,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.myProject.myPj.vo.UserVo;
@@ -28,17 +30,16 @@ public class UserController {
             
             long id = (long) userVo.getSocialUserId();
             UserVo checkUser = userService.getUser(id);
-            System.out.println("요까진 옴 333");
             try {
             	if(checkUser == null) {
-                	model.addAttribute("socialUserId", userVo.getSocialUserId());
-                	model.addAttribute("userNick", userVo.getUserNick());
-                	model.addAttribute("applyType", "kakao");
+//                	model.addAttribute("socialUserId", userVo.getSocialUserId());
+//                	model.addAttribute("userNick", userVo.getUserNick());
+//                	model.addAttribute("applyType", "kakao");
+            		
                 	
                 	return "/common/register.html";
                 }else {
                 	HttpSession session = (HttpSession)request.getSession();
-                	System.out.println("요까진 옴 111");
                 	session.setAttribute("UserVo", checkUser);
 
                 	return "/index.html";
@@ -47,7 +48,6 @@ public class UserController {
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("요까진 옴 2222");
             	return "/index.html";
 			}
             
@@ -108,3 +108,4 @@ public class UserController {
 //		return "client/index.html";
 //	}
 }
+
