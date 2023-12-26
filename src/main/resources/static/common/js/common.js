@@ -7,6 +7,8 @@ function setSummernoteBasic(id){
 	
 	$('#'+id).summernote({
 		  height: 300,                 // 에디터 높이
+		  tabsize: 2,
+   		  prettifyHtml:false,
 		  minHeight: null,             // 최소 높이
 		  maxHeight: null,             // 최대 높이
 		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
@@ -21,6 +23,8 @@ function setSummernoteBasic(id){
 		   },
 		  toolbar: [
 			    // [groupName, [list of button]]
+			    // Add highlight plugin
+        		['highlight', ['highlight']],
 			    ['fontname', ['fontname']],
 			    ['fontsize', ['fontsize']],
 			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
