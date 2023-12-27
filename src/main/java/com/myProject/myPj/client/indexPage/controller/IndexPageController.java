@@ -2,6 +2,7 @@ package com.myProject.myPj.client.indexPage.controller;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,6 +44,14 @@ public class IndexPageController {
     	model.addAttribute("postDetail", postDetail);
     	model.addAttribute("replyDetail", replyDetail);
         return "showPost.html";
+    }
+    @RequestMapping("/post/getPostList.do")
+    public String getPostList(@RequestParam Map<String,Object> param, Model model) { 
+    	
+    	List<PostVo> postList = indexPageService.getPostList(param);
+    	
+    	model.addAttribute("postList",postList);
+        return "jsonView";
     }
     
 }

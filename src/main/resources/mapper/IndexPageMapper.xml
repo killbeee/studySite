@@ -23,4 +23,23 @@
 		WHERE 
 				PRT.POST_REFER_KEY_ID = #{keyId}
 	</select>
+	<select id="getPostList" parameterType="String" resultType="com.myProject.myPj.vo.PostVo">
+		SELECT 
+		    ID,
+		    TITLE,
+		    CONTENT,
+		    WRITER,
+		    VIEW_CNT,
+		    NOTICE_YN,
+		    DELETE_YN,
+		    CREATE_DATE,
+		    MODIFIED_DATE,
+		    POST_TYPE,
+		    DATE_FORMAT(PT.CREATE_DATE, '%m')
+		FROM 
+		    POST_TABLE PT
+		WHERE 
+		    DATE_FORMAT(PT.CREATE_DATE, '%Y') = #{year}
+		    AND DATE_FORMAT(PT.CREATE_DATE, '%m') =#{month}
+	</select>
 </mapper>

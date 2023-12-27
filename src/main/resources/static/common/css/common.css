@@ -776,8 +776,17 @@ p {
     border-style: solid;
     border-color: #e5e5e5;
     background: #fff;
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-}​
+}
+
+/*summernote*/
+.fc .fc-toolbar-title{
+    font-size: 1.3em;
+    color: bisque;
+}
+.fc-col-header-cell-cushion{
+	color: bisque;
+}
+.fc-event-title-container{
+	text-align: center;
+}
+​

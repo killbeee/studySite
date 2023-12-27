@@ -2,13 +2,6 @@
 
 <html lang="en">
 	
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>My Portfolio</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-</head>
 <div th:replace="/headerS :: headerS"></div>
 <body>
 
@@ -397,8 +390,8 @@ function goDetail(keyId){
 }
 
 $("#kakaoBtn").click(function(){
-	//window.location="https://kauth.kakao.com/oauth/authorize?client_id=824cabc1a0ddf96e8395db33ea0399fd&redirect_uri=http://www.brightdev.info/kakao/callback&response_type=code";
-	window.location="https://kauth.kakao.com/oauth/authorize?client_id=824cabc1a0ddf96e8395db33ea0399fd&redirect_uri=http://localhost:8081/kakao/callback&response_type=code";
+	window.location="https://kauth.kakao.com/oauth/authorize?client_id=824cabc1a0ddf96e8395db33ea0399fd&redirect_uri=http://www.brightdev.info/kakao/callback&response_type=code";
+	//window.location="https://kauth.kakao.com/oauth/authorize?client_id=824cabc1a0ddf96e8395db33ea0399fd&redirect_uri=http://localhost:8081/kakao/callback&response_type=code";
 });
 $("#logOut").click(function(){
 	window.location="/logout.do";

@@ -2,6 +2,7 @@ package com.myProject.myPj.client.indexPage.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,4 +36,10 @@ public class IndexPageService {
     	
     	return replyDetail;
     }
+
+	public List<PostVo> getPostList(Map<String, Object> param) {
+		List<PostVo> list= indexPageMapper.getPostList(param);
+		
+		return list;
+	}
 }
