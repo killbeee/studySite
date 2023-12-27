@@ -33,9 +33,9 @@ public class MypageController {
     private CommonService commonService;
     
     @RequestMapping(value={"/client/portfolio/getPost.do"})
-    public String getUserList(@RequestParam Map<String, Object> paramMap,Model model) {
+    public String getUserList(HttpServletRequest req,@RequestParam Map<String, Object> paramMap,Model model) {
    
-    	 List<Map<String,Object>> postList =  myPageService.getShareTodayPost(paramMap);
+    	 List<Map<String,Object>> postList =  myPageService.getShareTodayPost(req,paramMap);
 
          model.addAttribute("postList", postList);
     	

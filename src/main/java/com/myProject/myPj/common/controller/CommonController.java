@@ -12,7 +12,7 @@ import com.myProject.myPj.common.service.CommonService;
 public class CommonController {
 
     @Autowired
-    private CommonService CommonService;
+    private CommonService commonService;
     
     
 
