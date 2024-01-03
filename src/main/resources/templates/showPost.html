@@ -147,7 +147,18 @@ function addReply(){
         dataType:"json",
         type: "POST",
         success: function() {
-
+				Swal.fire({
+					title: '등록에 성공했습니다!',
+					text: '댓글을 저장했음다',
+					imageUrl: '/common/img/jerryCon.gif',
+					imageWidth: 400,
+					imageHeight: 200,
+					imageAlt: 'Custom image',
+					didClose: () => {
+						window.location.reload();
+					}
+				})
+			
 	    },
 	    error: function(e) {
 	        console.log(e);

@@ -229,6 +229,10 @@
 			    
 			  </ul>
 			</nav>
+			<div class="input-group" style="justify-content: center;">
+				<input type="text" class="form-control-sm" id="searchNm" >
+					<button class="btn btn-primary" onclick="getData(1,'All')">검색</button>
+				</div>
         </div>
       </div>
     </section><!-- End Portfolio Section -->
@@ -327,13 +331,15 @@ $(document).ready(function(){
 })
 function getData(curPage,type){
 	$("#portfolio").focus();
-	let searchSec = type;
+	let _searchSec = type;
+	let _searchNm = $("#searchNm").val();
 	$.ajax({
 		url: "/client/portfolio/getPost.do"
 		, type : "post"
 		, data : {
 			currentPageNo : curPage,
-			searchSec : searchSec,
+			searchSec : _searchSec,
+			searchNm : _searchNm
 		}
 		, success : function(res) {
 			let html ="";
@@ -352,9 +358,9 @@ function getData(curPage,type){
 			var pagingVo = res.postList[res.postList.length-1].pagingVo;
 			//일단 페이징 for문 돌려
 			if(pagingVo.currentPageNo != 1){
-				html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo - 1) + ',`'+type+'`)">Previous</a></li>';
+				html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo - 1) + ',`'+type+'`)">이전</a></li>';
 			}else{
-				html2 += '<li class="page-item"><a class="page-link font_white bg_gray">Previous</a></li>';
+				html2 += '<li class="page-item"><a class="page-link font_white bg_gray">이전</a></li>';
 			}	
 			for(let i = pagingVo.firstPageNoOnPageList;i<=pagingVo.lastPageNoOnPageList;i++){
 				if(pagingVo.currentPageNo == i){
@@ -363,7 +369,7 @@ function getData(curPage,type){
 					html2 += ' <li class="page-item"><a class="page-link" href="javascript:getData('+i+',`'+type+'`)">'+i+'</a></li>' 
 				}
 			}
-			html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo + 1) + ',`'+type+'`)">Next</a></li>'
+			html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo + 1) + ',`'+type+'`)">다음</a></li>'
 			$("#pagination").html(html2);
 			$("#cardBody").html(html);
 			$("#cardBody").css('height', 'auto');

@@ -27,6 +27,9 @@
 		        <if test="searchSec != 'All'">
 		      	  AND  PT.POST_TYPE = #{searchSec}
 		        </if>
+		        <if test="searchNm != '' and searchNm != null">
+		      	  AND PT.TITLE LIKE CONCAT('%',#{searchNm}, '%')
+		        </if>
 		    ) TT
 		WHERE
 		    TT.ROWNUM BETWEEN #{firstIndex}+1 AND #{lastIndex}
