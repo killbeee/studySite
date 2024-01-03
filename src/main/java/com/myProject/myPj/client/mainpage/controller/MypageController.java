@@ -122,5 +122,13 @@ public class MypageController {
         model.addAttribute("checkSuc", checkSuc);
         return "jsonView";
     }
+    @Transactional
+    @RequestMapping(value = "/client/portfolio/delReply.do",method = RequestMethod.POST)
+    public String delReply(Model model,@RequestParam Map<String, Object> paramMap){
+    	Boolean checkSuc = false;
+    	checkSuc = myPageService.delReply(paramMap);
+        model.addAttribute("checkSuc", checkSuc);
+        return "jsonView";
+    }
     
 }

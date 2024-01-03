@@ -71,4 +71,10 @@ public class MyPageService {
 
 		return yes;
 	}
+	public boolean delReply(Map<String, Object> paramMap) {
+		boolean yes = true;
+		yes = myPageMapper.delReply(paramMap);
+
+		return yes;
+	}
 }

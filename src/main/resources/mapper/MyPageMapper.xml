@@ -118,4 +118,9 @@
 				,#{password}						
 			)
 	</insert>
+	<delete id="delReply" parameterType="hashMap">
+		DELETE
+			FROM POST_REPLY_TABLE
+			WHERE REPLY_KEY_ID = #{keyId}						
+	</delete>
 </mapper>

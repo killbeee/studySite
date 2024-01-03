@@ -79,6 +79,9 @@
 					        <div class="text">
 					          <p>[[${list.replyContent}]]</p>
 					        </div>
+					        <button type="button" class="btn btn-sm fr" th:if="${session.UserVo} != null" th:onclick="delReply([[${list.replyKeyId}]])">
+								<i class="bi bi-dash-square"></i>
+							</button>
 					        <p class="attribution">by <a href="#non">[[${list.regId}]]</a>   [[${#dates.format(list.regDate, 'yyyy-MMM-dd일 HH:mm')}]] , [[${list.betweenTime}]]</p>
 					      </div>
 					    </article>
@@ -164,6 +167,38 @@ function addReply(){
 	        console.log(e);
 	    }
     })
+}
+function delReply(_keyId){
+	if(confirm("삭제하시겠습니까?")){
+		var url = "/client/portfolio/delReply.do";
+		$.ajax({
+				url: url, // Fix the URL variable
+				data: {
+					keyId : _keyId,
+				},
+				dataType:"json",
+				type: "POST",
+				success: function() {
+					Swal.fire({
+						title: '댓글 삭제 성공!',
+						text: '댓글을 삭제했음다',
+						imageUrl: '/common/img/jerryCon.gif',
+						imageWidth: 400,
+						imageHeight: 200,
+						imageAlt: 'Custom image',
+						didClose: () => {
+							window.location.reload();
+						}
+					})
+		    },
+		    error: function(e) {
+		        console.log(e);
+		    }
+	    })
+	}else{
+		return false;
+	}
+   
 }
 </script>
 </html>
