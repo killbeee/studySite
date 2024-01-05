@@ -790,20 +790,4 @@ p {
 	text-align: center;
 }
 
-/* FONT FIELD*/
-@font-face {
-    font-family: 'pretendBlack';
-    src: url('/common/fonts/Pretendard-Black') format('truetype');
-    /* Add additional src lines for different file formats if necessary */
-}
-@font-face {
-    font-family: 'pretendBold';
-    src: url('/common/fonts/Pretendard-Bold') format('truetype');
-    /* Add additional src lines for different file formats if necessary */
-}
-.pt_bold{
-	font-family: 'pretendBold', sans-serif; 
-}
-.pt_black{
-	font-family: 'pretendBlack', sans-serif; 
-}
+

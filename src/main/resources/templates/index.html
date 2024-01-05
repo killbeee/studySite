@@ -216,6 +216,7 @@
               <li onclick="getData(1,'front')" >FRONT</li>
               <li onclick="getData(1,'back')">BACK</li>
               <li onclick="getData(1,'db')">DB</li>
+              <li onclick="getData(1,'etc')">ETC</li>
             </ul>
           </div>
         </div>
@@ -396,8 +397,8 @@ function goDetail(keyId){
 }
 
 $("#kakaoBtn").click(function(){
-	//window.location="https://kauth.kakao.com/oauth/authorize?client_id=824cabc1a0ddf96e8395db33ea0399fd&redirect_uri=http://www.brightdev.info/kakao/callback&response_type=code";
-	window.location="https://kauth.kakao.com/oauth/authorize?client_id=824cabc1a0ddf96e8395db33ea0399fd&redirect_uri=http://localhost:8081/kakao/callback&response_type=code";
+	window.location="https://kauth.kakao.com/oauth/authorize?client_id=824cabc1a0ddf96e8395db33ea0399fd&redirect_uri=http://www.brightdev.info/kakao/callback&response_type=code";
+	//window.location="https://kauth.kakao.com/oauth/authorize?client_id=824cabc1a0ddf96e8395db33ea0399fd&redirect_uri=http://localhost:8081/kakao/callback&response_type=code";
 });
 $("#logOut").click(function(){
 	window.location="/logout.do";
