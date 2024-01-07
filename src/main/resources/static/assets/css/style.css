@@ -36,7 +36,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Raleway", sans-serif;
+  font-family: "pretendBold", sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -103,7 +103,7 @@ h6 {
   font-weight: 600;
   -moz-text-align-last: center;
   text-align-last: center;
-  font-family: "Poppins", sans-serif;
+  font-family: "pretendBold", sans-serif;
 }
 
 #header .profile h1 a,
@@ -280,7 +280,7 @@ h6 {
   color: #fff;
   margin-bottom: 50px;
   font-size: 26px;
-  font-family: "Poppins", sans-serif;
+  font-family: "pretendBold", sans-serif;
 }
 
 #hero p span {
@@ -416,7 +416,7 @@ section {
 .facts .count-box p {
   padding: 15px 0 0 0;
   margin: 0 0 0 60px;
-  font-family: "Raleway", sans-serif;
+  font-family: "pretendBold", sans-serif;
   font-size: 14px;
   color: #122f57;
 }
@@ -427,7 +427,7 @@ section {
   margin-top: 20px;
   color: #122f57;
   font-size: 15px;
-  font-family: "Poppins", sans-serif;
+  font-family: "pretendBold", sans-serif;
   transition: ease-in-out 0.3s;
 }
 
@@ -451,7 +451,7 @@ section {
   text-transform: uppercase;
   display: block;
   font-weight: 600;
-  font-family: "Poppins", sans-serif;
+  font-family: "pretendBold", sans-serif;
   color: #050d18;
 }
 
@@ -495,7 +495,7 @@ section {
   font-size: 18px;
   font-weight: 600;
   text-transform: uppercase;
-  font-family: "Poppins", sans-serif;
+  font-family: "pretendBold", sans-serif;
   color: #050d18;
   margin-bottom: 10px;
 }
