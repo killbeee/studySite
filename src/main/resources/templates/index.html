@@ -349,7 +349,11 @@ function getData(curPage,type){
 				html += '<div class="col-lg-4 col-md-6 portfolio-item" onclick="goDetail(`'+res.postList[i].ID+'`)">'
 				html += '	<div class="portfolio-wrap">'
 				html += '		<img  onerror="this.src=`/common/img/noImg.jpg`" src="/outSource'+res.postList[i].FILE_LIST+'" class="portfolioImg img-fluid" alt="" style="width:404px;height:303px">'
-				html += '		<div class="desc"><b>['+res.postList[i].POST_TYPE.toUpperCase()+']  </b>'+res.postList[i].TITLE+'</div>'
+				html += '		<div class="desc"><b>['+res.postList[i].POST_TYPE.toUpperCase()+']  </b>'+res.postList[i].TITLE
+				if(res.postList[i].REPLY_CNT>0){
+					html +=			'<b class="font_red">('+res.postList[i].REPLY_CNT+')</b>'
+				}
+				html +=				'</div>'
 				html += '	</div>'
 				html += '</div>'
 				

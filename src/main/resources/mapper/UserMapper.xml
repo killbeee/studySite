@@ -39,6 +39,11 @@
 			,#{handNo}
 			,SYSDATE()
 		)       
-        	<!-- SQL문 작성 -->
     </insert>
+    <update id="updateLastLogin" parameterType="long">	
+		UPDATE PJ_USER_INFO
+			SET LAST_CONNECT = NOW()
+		WHERE 
+			SOCIAL_USER_ID = #{id}
+    </update>
 </mapper>

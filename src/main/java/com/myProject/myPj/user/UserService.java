@@ -47,7 +47,7 @@ public class UserService {
             sb.append("&client_id=824cabc1a0ddf96e8395db33ea0399fd"); // TODO REST_API_KEY 입력
             sb.append("&redirect_uri=http://www.brightdev.info/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
             //sb.append("&redirect_uri=http://rong3531.synology.me:4700/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
-           // sb.append("&redirect_uri=http://localhost:8081/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
+            //sb.append("&redirect_uri=http://localhost:8081/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
             sb.append("&code=" + code);
             sb.append("&client_secret=" + "s5q6VO8kXD6ZAfKbP6OrQDVZhogrAQV3");;
             bw.write(sb.toString());
@@ -262,4 +262,8 @@ public class UserService {
         userMapper.regRegisteration(userVo);
 
     }
+
+	public void updateLastLogin(long id) {
+		userMapper.updateLastLogin(id);
+	}
 }

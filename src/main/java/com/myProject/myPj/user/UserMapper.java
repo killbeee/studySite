@@ -7,7 +7,8 @@ import com.myProject.myPj.vo.UserVo;
 
 @Mapper
 public interface UserMapper {
-	 int checkUser(long id);
-	 UserVo getUser(Object id);
-	 void regRegisteration(UserVo userVo);
+	int checkUser(long id);
+	UserVo getUser(Object id);
+	void regRegisteration(UserVo userVo);
+	void updateLastLogin(long id);
 }

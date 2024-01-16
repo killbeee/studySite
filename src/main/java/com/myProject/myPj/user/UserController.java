@@ -1,9 +1,6 @@
 package com.myProject.myPj.user;
 
-import java.io.PrintWriter;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,25 +32,23 @@ public class UserController {
 //                	model.addAttribute("socialUserId", userVo.getSocialUserId());
 //                	model.addAttribute("userNick", userVo.getUserNick());
 //                	model.addAttribute("applyType", "kakao");
-            		
-                	
-                	return "/common/register.html";
-                }else {
-                	HttpSession session = (HttpSession)request.getSession();
-                	session.setAttribute("UserVo", checkUser);
-
-                	return "/index.html";
-                }
+				return "/common/register.html";
+				}else {
+					HttpSession session = (HttpSession)request.getSession();
+					session.setAttribute("UserVo", checkUser);
+					userService.updateLastLogin(id);
+					return "/index.html";
+				}
 				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-            	return "/index.html";
+				return "/index.html";
 			}
-            
-            
-            
-            
+
+
+
+
     }
     
 //    @SuppressWarnings("unused")

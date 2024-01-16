@@ -15,13 +15,13 @@ public class UserVo {
   
 	private String userId;
 	private String userName;
-    private String userNick;
+	private String userNick;
 	private String userEmail;
 	private String userAddress;
 	private String applyType;
 	private Object socialUserId;
 	private String handNo;
-    private Date regDate;
-    
+	private Date regDate;
+	private Date lastConnect;
 
 }
