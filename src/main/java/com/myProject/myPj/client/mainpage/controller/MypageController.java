@@ -42,7 +42,6 @@ public class MypageController {
         return "jsonView";
      
     }
-    @RequestMapping(value={"/client/portfolio/modifyPost.do"})
     public String modifyPost(@RequestParam Map<String, Object> paramMap,Model model) {
     	
     	 Map<String,Object> post =  myPageService.modifyPost(paramMap);
