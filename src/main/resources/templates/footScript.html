@@ -101,8 +101,10 @@
 			}
 			, success : function(res) {
 				for( var i=0; i<res.postList.length; i++) {
+					debugger;
 					var _obj = res.postList[i];
 					const objDate = new Date(_obj.createDate);
+					objDate.setDate(objDate.getDate() + 1);
 					const formattedDate = objDate.toISOString().split('T')[0];
 					calendar.addEvent({
 						id : _obj.id,
