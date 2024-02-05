@@ -88,7 +88,7 @@
 		
 		var date = calendar.currentData.currentDate;
 		const dateObject = new Date(date);
-		
+		debugger;
 		const _year = dateObject.getFullYear();
 		const _month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
 		
@@ -101,7 +101,6 @@
 			}
 			, success : function(res) {
 				for( var i=0; i<res.postList.length; i++) {
-					debugger;
 					var _obj = res.postList[i];
 					const objDate = new Date(_obj.createDate);
 					objDate.setDate(objDate.getDate() + 1);
