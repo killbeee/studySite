@@ -2,118 +2,122 @@
 <html lang="ko">
 <div th:replace="/headerS :: headerS"></div>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
 <body>
-  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
-  <div th:replace="/headerDetail :: header"></div>
-
-  <main id="main">
-
-    <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>Study Details</h2>
-          <ol>
-            <li><a href="/">Home</a></li>
-            <li>Study Details</li>
-          </ol>
-        </div>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
-
-    <!-- ======= Portfolio Details Section ======= -->
-    <section id="portfolio-details" class="portfolio-details">
-      <div class="container">
-
-        <div class="row gy-4">
-			
-			<div class="col-lg-10 mx-auto">
-				<form id="uploadForm" enctype="multipart/form-data">
-				   <h1 class="fw-bolder mb-1 fontKortraDefault">[ [[${postDetail.postType}]] ] [[${postDetail.title}]]</h1>
-					<p class="ta_r">[[${postDetail.createDate}]]</p>
-				   <hr>
-                   <div id="postContent">
-						[(${postDetail.content})]
-				   </div>          
-                </form>	   
-                <div class="box-footer ta_r">
-					<button type="button" name="list" class="btn btn-outline-secondary" onclick="goBack()">
-						<i class="bi bi-list"></i>목록
-					</button>
-					<button type="button" name="list" th:if="${session.UserVo} != null" class="btn btn-outline-secondary bg_lightblue" th:onclick="goModify([[${postDetail.id}]])" >
-						<i class="bi bi-pencil-square"></i>수정
-					</button>
-					<button type="button" name="list" th:if="${session.UserVo} != null" class="btn btn-outline-secondary bg_lightred" th:onclick="changeDelYn([[${postDetail.id}]])">
-						<i class="bi bi-trash-fill"></i>삭제
-					</button>
+	<i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+	<div th:replace="/headerDetail :: header"></div>
+	<main id="main">
+		<!-- ======= Breadcrumbs ======= -->
+		<section id="breadcrumbs" class="breadcrumbs">
+			<div class="container">
+				<div class="d-flex justify-content-between align-items-center">
+					<h2>Study Details</h2>
+					<ol>
+						<li><a href="/">Home</a></li>
+						<li>Study Details</li>
+					</ol>
 				</div>
-				<hr>
-			</div>  		    
-			
-			<div class="row">
-				<div class="col-lg-10 mx-auto">
-				<form id="replyForm" method="post"> 
-				<textarea class="form-control" name="replyCont" style="resize: none;"></textarea>
-					<div class="pd_t10 ta_r" >
-						<input type="hidden" name="keyId" th:value="${postDetail.id}">
-						<input value=""  name="userId" class="form-control wd_100 dp_inline input-sm" placeholder="이름">	
-						<input type="password" name="password" value="" class="form-control wd_100 dp_inline input-sm" placeholder="비밀번호">
-						<button type="button" style="margin-right: -20px;"  class="btn btn-md btn-outline-secondary " onclick="addReply()">
-							<i class="bi bi-arrow-up-square-fill"></i>등록
-						</button>
-					</div>
-				</form>
-				</div>
-			</div>	
-			<!--commentSection-->
-			<th:bloc th:if="${replyDetail} != null" >
-				<th:bloc th:each="list:${replyDetail}">
-				<div class="row">
-					<div class="col-lg-10 mx-auto">	
-						<article class="comment pd_t20">
-					      <a class="comment-img" href="#non">
-					        <img src="/common/img/noHead.png" alt="" width="50" height="50">
-					      </a>
-					      <div class="comment-body">
-					        <div class="text">
-					          <p>[[${list.replyContent}]]</p>
-					        </div>
-					        <button type="button" class="btn btn-sm fr" th:if="${session.UserVo} != null" th:onclick="delReply([[${list.replyKeyId}]])">
-								<i class="bi bi-dash-square"></i>
+			</div>
+		</section><!-- End Breadcrumbs -->
+		<!-- ======= Portfolio Details Section ======= -->
+		<section id="portfolio-details" class="portfolio-details">
+			<div class="container">
+				<div class="row gy-4">
+					<div class="col-lg-10 mx-auto">
+						<form id="uploadForm" enctype="multipart/form-data">
+							<h1 class="fw-bolder mb-1 fontKortraDefault">[ [[${postDetail.postType}]] ]
+								[[${postDetail.title}]]</h1>
+							<p class="ta_r">[[${postDetail.createDate}]]</p>
+							<hr>
+							<div id="postContent">
+								[(${postDetail.content})]
+							</div>
+						</form>
+						<div class="box-footer ta_r">
+							<button type="button" name="list" class="btn btn-outline-secondary" onclick="goBack()">
+								<i class="bi bi-list"></i>목록
 							</button>
-					        <p class="attribution">by <a href="#non">[[${list.regId}]]</a>   [[${#dates.format(list.regDate, 'yyyy-MMM-dd일 HH:mm')}]] , [[${list.betweenTime}]]</p>
-					      </div>
-					    </article>
-					</div>	    
-				</div>	
-				</th:bloc>    			
-			</th:bloc>
-        </div>
- 
-      </div>
+							<button type="button" name="list" th:if="${session.UserVo} != null" class="btn btn-outline-secondary bg_lightblue" th:onclick="goModify([[${postDetail.id}]])">
+								<i class="bi bi-pencil-square"></i>수정
+							</button>
+							<button type="button" name="list" th:if="${session.UserVo} != null" class="btn btn-outline-secondary bg_lightred" th:onclick="changeDelYn([[${postDetail.id}]])">
+								<i class="bi bi-trash-fill"></i>삭제
+							</button>
+						</div>
+						<hr>
+					</div>
 
-    </section>
-    <!--덧글 폼-->
+					<div class="row">
+						<div class="col-lg-10 mx-auto">
+							<form id="replyForm" method="post">
+								<textarea class="form-control" name="replyCont" style="resize: none;"></textarea>
+								<div class="pd_t10 ta_r">
+									<input type="hidden" name="keyId" th:value="${postDetail.id}">
+									<input value="" name="userId" class="form-control wd_100 dp_inline input-sm" placeholder="이름">
+									<input type="password" name="password" value="" class="form-control wd_100 dp_inline input-sm" placeholder="비밀번호">
+									<button type="button" style="margin-right: -20px;" class="btn btn-md btn-outline-secondary " onclick="addReply()">
+										<i class="bi bi-arrow-up-square-fill"></i>등록
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!--commentSection-->
+					<th:bloc th:if="${replyDetail} != null">
+						<th:bloc th:each="list:${replyDetail}">
+							<div class="row">
+								<div class="col-lg-10 mx-auto">
+									<article class="comment pd_t20">
+										<a class="comment-img" href="#non">
+											<img src="/common/img/noHead.png" alt="" width="50" height="50">
+										</a>
+										<div class="comment-body">
+											<div class="text">
+												<p>[[${list.replyContent}]]</p>
+											</div>
+											<button type="button" class="btn btn-sm fr" th:if="${session.UserVo} != null" th:onclick="delReply([[${list.replyKeyId}]])">
+												<i class="bi bi-dash-square"></i>
+											</button>
+											<p class="attribution">by
+												<a href="#non">[[${list.regId}]]</a>
+												[[${#dates.format(list.regDate, 'yyyy-MMM-dd일 HH:mm')}]] ,[[${list.betweenTime}]]
+											</p>
+										</div>
+									</article>
+								</div>
+							</div>
+						</th:bloc>
+					</th:bloc>
+				</div>
+			</div>
+			<div>
+				<div class="row align-items-start">
+					<div class="col">
+						One of three columns
+					</div>
+					<div class="col">
+						One of three columns
+					</div>
+					<div class="col">
+						One of three columns
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--덧글 폼-->
+	</main>
+	<footer id="footer">
+		<div class="container">
+			<div class="copyright">
+				&copy; Copyright <strong><span>iPortfolio</span></strong>
+			</div>
+			<div class="credits">
+				Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+			</div>
+		</div>
+	</footer><!-- End  Footer -->
 
-
-				
-		
-  </main>
-						
-
-  <footer id="footer">
-    <div class="container">
-      <div class="copyright">
-        &copy; Copyright <strong><span>iPortfolio</span></strong>
-      </div>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-  </footer><!-- End  Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 </body>
 <div th:replace="/footScript :: footerS"></div>
@@ -122,33 +126,33 @@
 	<input id="keyId" name="keyId" type="hidden">
 </form>
 <script>
-$(document).ready(function(){
+	$(document).ready(function () {
 
-})
-function goBack(){
-	window.location.href="/"
-}
-function goModify(id){
-	$("#keyId").val(id);
-	var url = "/client/portfolio/modifyPost.do";
-	$("#teleForm").attr("action",url);
-	$("#teleForm").submit();
-}
-function changeDelYn(id){
-	$("#keyId").val(id);
-	var url = "/client/portfolio/deletePost.do";
-	$("#teleForm").attr("action",url);
-	$("#teleForm").submit();
-}
-function addReply(){
-    var data = $("#replyForm").serialize();
-    var url = "/client/portfolio/addReply.do";
-    $.ajax({
-        url: url, // Fix the URL variable
-        data: data,
-        dataType:"json",
-        type: "POST",
-        success: function() {
+	})
+	function goBack() {
+		window.location.href = "/"
+	}
+	function goModify(id) {
+		$("#keyId").val(id);
+		var url = "/client/portfolio/modifyPost.do";
+		$("#teleForm").attr("action", url);
+		$("#teleForm").submit();
+	}
+	function changeDelYn(id) {
+		$("#keyId").val(id);
+		var url = "/client/portfolio/deletePost.do";
+		$("#teleForm").attr("action", url);
+		$("#teleForm").submit();
+	}
+	function addReply() {
+		var data = $("#replyForm").serialize();
+		var url = "/client/portfolio/addReply.do";
+		$.ajax({
+			url: url, // Fix the URL variable
+			data: data,
+			dataType: "json",
+			type: "POST",
+			success: function () {
 				Swal.fire({
 					title: '등록에 성공했습니다!',
 					text: '댓글을 저장했음다',
@@ -160,24 +164,24 @@ function addReply(){
 						window.location.reload();
 					}
 				})
-			
-	    },
-	    error: function(e) {
-	        console.log(e);
-	    }
-    })
-}
-function delReply(_keyId){
-	if(confirm("삭제하시겠습니까?")){
-		var url = "/client/portfolio/delReply.do";
-		$.ajax({
+
+			},
+			error: function (e) {
+				console.log(e);
+			}
+		})
+	}
+	function delReply(_keyId) {
+		if (confirm("삭제하시겠습니까?")) {
+			var url = "/client/portfolio/delReply.do";
+			$.ajax({
 				url: url, // Fix the URL variable
 				data: {
-					keyId : _keyId,
+					keyId: _keyId,
 				},
-				dataType:"json",
+				dataType: "json",
 				type: "POST",
-				success: function() {
+				success: function () {
 					Swal.fire({
 						title: '댓글 삭제 성공!',
 						text: '댓글을 삭제했음다',
@@ -189,15 +193,16 @@ function delReply(_keyId){
 							window.location.reload();
 						}
 					})
-		    },
-		    error: function(e) {
-		        console.log(e);
-		    }
-	    })
-	}else{
-		return false;
+				},
+				error: function (e) {
+					console.log(e);
+				}
+			})
+		} else {
+			return false;
+		}
+
 	}
-   
-}
 </script>
+
 </html>
