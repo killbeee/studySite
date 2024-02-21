@@ -4,7 +4,7 @@
 */
 //서머노트 호출(basic)
 function setSummernoteBasic(id){
-	
+
 	$('#'+id).summernote({
 		  height: 300,                 // 에디터 높이
 		  tabsize: 2,
@@ -33,16 +33,16 @@ function setSummernoteBasic(id){
 			    ['para', ['ul', 'ol', 'paragraph']],
 			    ['height', ['height']],
 			    ['insert',['picture','link','video']],
-			    ['view', ['fullscreen', 'help']]
+			    ['view', ['codeview','fullscreen', 'help']]
 			  ],
 			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-          
+
 	});
-	
+
 }
 
-    
+
 function sendFile(file, el) {
   var form_data = new FormData();
   form_data.append('file', file);
@@ -58,7 +58,7 @@ function sendFile(file, el) {
       $(el).summernote('editor.insertImage', url);
     }
   });
-} 
+}
 var fileArr;
 var fileInfoArr=[];
 
@@ -72,7 +72,7 @@ var fileInfoArr=[];
 function fileRemove(index) {
     console.log("index: "+index);
     fileInfoArr.splice(index,1);
- 
+
     var imgId="#img_id_"+index;
     $(imgId).remove();
     console.log(fileInfoArr);
@@ -92,24 +92,24 @@ function previewImage(targetObj, imgArea) {
 		});
 	}else{
     fileArr=Array.prototype.slice.call(files);
-    
+
     var preview = document.getElementById(imgArea); //div id
     var ua = window.navigator.userAgent;
- 
+
     //ie일때(IE8 이하에서만 작동)
     if (ua.indexOf("MSIE") > -1) {
         targetObj.select();
         try {
             var src = document.selection.createRange().text; // get file full path(IE9, IE10에서 사용 불가)
             var ie_preview_error = document.getElementById("ie_preview_error_" + imgArea);
- 
- 
+
+
             if (ie_preview_error) {
                 preview.removeChild(ie_preview_error); //error가 있으면 delete
             }
- 
+
             var img = document.getElementById(imgArea); //이미지가 뿌려질 곳
- 
+
             //이미지 로딩, sizingMethod는 div에 맞춰서 사이즈를 자동조절 하는 역할
             img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+src+"', sizingMethod='scale')";
         } catch (e) {
@@ -126,7 +126,7 @@ function previewImage(targetObj, imgArea) {
         for ( var i = 0; i < files.length; i++) {
             var file = files[i];
             fileInfoArr.push(file);
- 
+
             var imageType = /image.*/; //이미지 파일일경우만.. 뿌려준다.
             if (!file.type.match(imageType))
                 continue;
@@ -134,13 +134,13 @@ function previewImage(targetObj, imgArea) {
             // if (prevImg) {
             //     preview.removeChild(prevImg);
             // }
- 
+
             var span=document.createElement('span');
             span.id="img_id_" +i;
             span.style.width = '100px';
             span.style.height = '100px';
             preview.appendChild(span);
- 
+
             var img = document.createElement("img");
             img.className="addImg";
             img.classList.add("obj");
@@ -151,7 +151,7 @@ function previewImage(targetObj, imgArea) {
             const idx=i;
             img.onclick=()=>fileRemove(idx);   //이미지를 클릭했을 때 remove함수 실행.
             span.appendChild(img);
- 
+
             if (window.FileReader) { // FireFox, Chrome, Opera 확인.
                 var reader = new FileReader();
                 reader.onloadend = (function(aImg) {
