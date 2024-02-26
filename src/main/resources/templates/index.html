@@ -347,7 +347,6 @@
 	<div th:replace="/footScript :: footerS"></div>
 	<script>
 		$(document).ready(function () {
-			debugger;
 			getData(1, 'All');
 		})
 		function getData(curPage, type) {
@@ -365,35 +364,44 @@
 				, success: function (res) {
 					let html = "";
 					let html2 = "";
-					for (let i = 0; i < res.postList.length - 1; i++) {
-						html += '<div class="col-lg-4 col-md-6 portfolio-item" onclick="goDetail(`' + res.postList[i].ID + '`)">'
-						html += '	<div class="portfolio-wrap">'
-						html += '		<img	onerror="this.src=`/common/img/noImg.jpg`" src="/outSource' + res.postList[i].FILE_LIST + '" class="portfolioImg img-fluid" alt="" style="width:404px;height:303px">'
-						html += '		<div class="desc"><b>[' + res.postList[i].POST_TYPE.toUpperCase() + ']	</b>' + res.postList[i].TITLE
-						if (res.postList[i].REPLY_CNT > 0) {
-							html += '<b class="font_red">(' + res.postList[i].REPLY_CNT + ')</b>'
+					if (res.postList.length > 0) {
+						for (let i = 0; i < res.postList.length - 1; i++) {
+							html += '<div class="col-lg-4 col-md-6 portfolio-item" onclick="goDetail(`' + res.postList[i].ID + '`)">'
+							html += '	<div class="portfolio-wrap">'
+							html += '		<img	onerror="this.src=`/common/img/noImg.jpg`" src="/outSource' + res.postList[i].FILE_LIST + '" class="portfolioImg img-fluid" alt="" style="width:404px;height:303px">'
+							html += '		<div class="desc"><b>[' + res.postList[i].POST_TYPE.toUpperCase() + ']	</b>' + res.postList[i].TITLE
+							if (res.postList[i].REPLY_CNT > 0) {
+								html += '<b class="font_red">(' + res.postList[i].REPLY_CNT + ')</b>'
+							}
+							html += '</div>'
+							html += '	</div>'
+							html += '</div>'
 						}
-						html += '</div>'
+						var pagingVo = res.postList[res.postList.length - 1].pagingVo;
+						//일단 페이징 for문 돌려
+						if (pagingVo.currentPageNo != 1) {
+							html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo - 1) + ',`' + type + '`)">이전</a></li>';
+						} else {
+							html2 += '<li class="page-item"><a class="page-link font_white bg_gray">이전</a></li>';
+						}
+						for (let i = pagingVo.firstPageNoOnPageList; i <= pagingVo.lastPageNoOnPageList; i++) {
+							if (pagingVo.currentPageNo == i) {
+								html2 += ' <li class="page-item "><a class="page-link bg_lightnavy font_white" href="javascript:getData(' + i + ',`' + type + '`)">' + i + '</a></li>'
+							} else {
+								html2 += ' <li class="page-item"><a class="page-link" href="javascript:getData(' + i + ',`' + type + '`)">' + i + '</a></li>'
+							}
+						}
+						html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo + 1) + ',`' + type + '`)">다음</a></li>'
+					} else {
+						html += '<div class="col-lg-4 col-md-6 portfolio-item">'
+						html += '	<div class="portfolio-wrap">'
+						html += '		<div class="desc"><b>[검색 결과가 없습니다.]	</b></div>'
 						html += '	</div>'
 						html += '</div>'
 
+						html2 += ' <li class="page-item "><a class="page-link bg_lightnavy font_white">1</li>'
+					}
 
-					}
-					var pagingVo = res.postList[res.postList.length - 1].pagingVo;
-					//일단 페이징 for문 돌려
-					if (pagingVo.currentPageNo != 1) {
-						html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo - 1) + ',`' + type + '`)">이전</a></li>';
-					} else {
-						html2 += '<li class="page-item"><a class="page-link font_white bg_gray">이전</a></li>';
-					}
-					for (let i = pagingVo.firstPageNoOnPageList; i <= pagingVo.lastPageNoOnPageList; i++) {
-						if (pagingVo.currentPageNo == i) {
-							html2 += ' <li class="page-item "><a class="page-link bg_lightnavy font_white" href="javascript:getData(' + i + ',`' + type + '`)">' + i + '</a></li>'
-						} else {
-							html2 += ' <li class="page-item"><a class="page-link" href="javascript:getData(' + i + ',`' + type + '`)">' + i + '</a></li>'
-						}
-					}
-					html2 += '<li class="page-item"><a class="page-link" href="javascript:getData(' + (pagingVo.currentPageNo + 1) + ',`' + type + '`)">다음</a></li>'
 					$("#pagination").html(html2);
 					$("#cardBody").html(html);
 					$("#cardBody").css('height', 'auto');
@@ -420,7 +428,7 @@
 		}
 
 		$("#kakaoBtn").click(function () {
-			
+
 		});
 		$("#logOut").click(function () {
 			window.location = "/logout.do";
