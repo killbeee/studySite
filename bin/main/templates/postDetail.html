@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<div th:replace="/headerS :: headerS"></div>
+
+<body>
+	<i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+	<div th:replace="/headerDetail :: header"></div>
+	<main id="main">
+		<!-- ======= Breadcrumbs ======= -->
+		<section id="breadcrumbs" class="breadcrumbs">
+			<div class="container">
+				<div class="d-flex justify-content-between align-items-center">
+					<h2>Portfoio Details</h2>
+					<ol>
+						<li><a href="/">Home</a></li>
+						<li>Portfoio Details</li>
+					</ol>
+				</div>
+			</div>
+		</section><!-- End Breadcrumbs -->
+		<!-- ======= Portfolio Details Section ======= -->
+		<section id="portfolio-details" class="portfolio-details">
+			<div class="container">
+				<div class="row gy-4">
+					<form id="uploadForm" enctype="multipart/form-data">
+						<input type="hidden" name="type" value="reg">
+						<div class="col-lg-10 mx-auto">
+							<!--				    <h1 class="fw-bolder mb-1 fontKortraDefault">오늘은 뭘 공부했느냐..</h1><br>-->
+							<select class="form-control" name="postType">
+								<option value="front">Front</option>
+								<option value="back">Back</option>
+								<option value="db">DB</option>
+								<option value="etcs">ETC</option>
+							</select>
+							<input type="text" class="form-control border-3" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요" required=""><br>
+							<input type="hidden" name="postContent" id="hiddenContent">
+							<div id="postContent"></div>
+							<p>미리보기 이미지 업로드</p>
+							<hr>
+							<!--파일 업로드 부분(미리보기)-->
+							<div style="display: inline;">
+								<label for="img_upload">
+									<img th:src="@{/common/img/picPlus.png}" style="width:100px; height:100px; cursor: pointer;">
+								</label>
+								<input type="file" name="img_upload" id="img_upload" onchange="previewImage(this,'imgArea')" style="display: none;">
+								<span id='imgArea' style='position:relative; color: black; border: 0px solid black;'>
+								</span>
+							</div>
+							<hr><br>
+							<!--파일 업로드 부분(미리보기) 끝-->
+							<p id="createTodayBtn" class="btn btn-primary fontKortraDefault" style="display: flex;margin-left: auto;">작성하기</p>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</section><!-- End Portfolio Details Section -->
+	</main><!-- End #main -->
+	<footer id="footer">
+		<div class="container">
+			<div class="copyright">
+				&copy; Copyright <strong><span>iPortfolio</span></strong>
+			</div>
+			<div class="credits">
+				Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+			</div>
+		</div>
+	</footer><!-- End  Footer -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+</body>
+<div th:replace="/footScript :: footerS"></div>
+<script>
+	$(document).ready(function () {
+		//공통함수에서 서머노트 호출
+		setSummernoteBasic("postContent");
+	})
+	$("#createTodayBtn").click(function () {
+		//저장
+		dataSubmit();
+	})
+	//저장하기
+	function dataSubmit() {
+		$("#hiddenContent").val($('#postContent').summernote('code'));
+		var data = new FormData($("#uploadForm")[0]);
+		var url = "/client/portfolio/createToday.do";
+		$.ajax({
+			url: url, // Fix the URL variable
+			data: data,
+			processData: false, // Fix the comma here
+			contentType: false, // Fix the contentType
+			type: "POST",
+			success: function () {
+				//alert("등록에 성공했습니다.");
+				Swal.fire({
+					title: '등록에 성공했습니다!',
+					text: '공부 내역을 저장했음다',
+					imageUrl: '/common/img/jerryCon.gif',
+					imageWidth: 400,
+					imageHeight: 200,
+					imageAlt: 'Custom image',
+					didClose: () => {
+						window.location.href = '/';
+					}
+				})
+			},
+			error: function (e) {
+				console.log(e);
+			}
+		})
+	}
+</script>
+
+</html>

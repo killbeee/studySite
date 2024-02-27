@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myProject.myPj.client.mainpage.mapper.MyPageMapper">	<!-- mapper 인터페이스가 위치하는 경로 -->
-     <select id="getShareTodayPost" resultType="com.myProject.myPj.vo.PostVo">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
-        SELECT
-        		 *
-        FROM 
-        		POST_TABLE pt
+     <select id="getShareTodayPost" parameterType="java.util.Map" resultType="java.util.Map">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
+       SELECT
+		    TT.*
+		FROM
+		    ( 
+		        SELECT
+		            COUNT(ID) OVER() AS MAX_COUNT,
+		            ROW_NUMBER() OVER(ORDER BY PT.ID DESC) AS ROWNUM,
+		       		PT.ID,
+					PT.TITLE,
+					PT.CONTENT,
+					PT.WRITER,
+					PT.VIEW_CNT,
+					PT.NOTICE_YN,
+					PT.DELETE_YN,
+					PT.CREATE_DATE,
+					PT.MODIFIED_DATE,
+					PT.POST_TYPE,
+				    FT.TRANS_FILE_PATH AS FILE_LIST,
+				    (SELECT COUNT(PRT.REPLY_KEY_ID) FROM POST_REPLY_TABLE PRT WHERE PRT.POST_REFER_KEY_ID= PT.ID) AS REPLY_CNT
+		        FROM POST_TABLE PT
+						LEFT OUTER JOIN FILE_TABLE FT 
+						ON FT.FILE_REFER_KEY = PT.ID
+		        WHERE 1=1
+		        <if test="searchSec != 'All'">
+		      	  AND  PT.POST_TYPE = #{searchSec}
+		        </if>
+		        <if test="searchNm != '' and searchNm != null">
+		      	  AND PT.TITLE LIKE CONCAT('%',#{searchNm}, '%')
+		        </if>
+		    ) TT
+		WHERE
+		    TT.ROWNUM BETWEEN #{firstIndex}+1 AND #{lastIndex}
+		ORDER BY TT.ROWNUM	  
+			
     </select>
     <insert id="insertPostInfo" parameterType="hashMap">
 		INSERT 
@@ -30,6 +60,68 @@
 				,NOW()
 				,#{postType}						
 			)
-		
 	</insert>
+	     <select id="getPost" parameterType="java.util.Map" resultType="java.util.Map">	<!-- id: mapper 인터페이스에서 선언한 메서드 이름과 같아야 한다. resultType: VO 클래스가 위치하는 경로 -->
+		      SELECT
+		            COUNT(ID) OVER() AS MAX_COUNT,
+		            ROW_NUMBER() OVER(ORDER BY PT.ID DESC) AS ROWNUM,
+		       		PT.ID,
+					PT.TITLE,
+					PT.CONTENT,
+					PT.WRITER,
+					PT.VIEW_CNT,
+					PT.NOTICE_YN,
+					PT.DELETE_YN,
+					PT.CREATE_DATE,
+					PT.MODIFIED_DATE,
+					PT.POST_TYPE,
+				    FT.TRANS_FILE_PATH AS FILE_LIST
+		        FROM POST_TABLE PT
+						LEFT OUTER JOIN FILE_TABLE FT 
+						ON FT.FILE_REFER_KEY = PT.ID
+				WHERE 
+					PT.ID = #{keyId}
+
+    </select>
+   <update id="updatePostInfo" parameterType="hashMap">
+		UPDATE POST_TABLE
+			SET
+			    TITLE = #{postTitle},
+			    CONTENT = #{postContent},
+			    POST_TYPE = #{postType},
+			    MODIFIED_DATE = NOW()
+			WHERE
+			    ID = #{id}
+	</update>
+	  <delete id="deletePost" parameterType="hashMap">
+		DELETE 
+				FROM POST_TABLE
+		WHERE
+			    ID = #{keyId}
+	</delete>
+	<insert id="insertReply" parameterType="hashMap">
+		INSERT 
+			INTO POST_REPLY_TABLE(
+				REPLY_KEY_ID,
+				POST_REFER_KEY_ID,
+				REPLY_CONTENT,
+				REG_ID,
+				REG_DATE,
+				REPLY_DEPTH,
+				PASSWORD
+			)VALUES(
+				FN_GET_PK('PRT','POST_REPLY_TABLE')
+				,#{keyId}
+				,#{replyCont}
+				,#{userId}
+				,DATE_FORMAT(now(), '%Y-%m-%d %H:%i')
+				,'1'
+				,#{password}						
+			)
+	</insert>
+	<delete id="delReply" parameterType="hashMap">
+		DELETE
+			FROM POST_REPLY_TABLE
+			WHERE REPLY_KEY_ID = #{keyId}						
+	</delete>
 </mapper>

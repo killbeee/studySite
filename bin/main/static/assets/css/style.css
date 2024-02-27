@@ -1,16 +1,22 @@
-/**
-* Template Name: iPortfolio
-* Updated: Nov 17 2023 with Bootstrap v5.3.2
-* Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
+/* FONT FIELD*/
+@font-face {
+    font-family: 'pretendBlack';
+    src: url('/common/fonts/Pretendard-Black') format('truetype');
+    /* Add additional src lines for different file formats if necessary */
+}
+@font-face {
+    font-family: 'pretendBold';
+    src: url('/common/fonts/Pretendard-Bold') format('truetype');
+    /* Add additional src lines for different file formats if necessary */
+}
+.pt_bold{
+	font-family: 'pretendBold'; 
+}
+.pt_black{
+	font-family: 'pretendBlack'; 
+}
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "pretendBlack";
   color: #272829;
 }
 
@@ -30,7 +36,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Raleway", sans-serif;
+  font-family: "pretendBold", sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -97,7 +103,7 @@ h6 {
   font-weight: 600;
   -moz-text-align-last: center;
   text-align-last: center;
-  font-family: "Poppins", sans-serif;
+  font-family: "pretendBold", sans-serif;
 }
 
 #header .profile h1 a,
@@ -274,7 +280,7 @@ h6 {
   color: #fff;
   margin-bottom: 50px;
   font-size: 26px;
-  font-family: "Poppins", sans-serif;
+  font-family: "pretendBold", sans-serif;
 }
 
 #hero p span {
@@ -410,7 +416,7 @@ section {
 .facts .count-box p {
   padding: 15px 0 0 0;
   margin: 0 0 0 60px;
-  font-family: "Raleway", sans-serif;
+  font-family: "pretendBold", sans-serif;
   font-size: 14px;
   color: #122f57;
 }
@@ -421,7 +427,7 @@ section {
   margin-top: 20px;
   color: #122f57;
   font-size: 15px;
-  font-family: "Poppins", sans-serif;
+  font-family: "pretendBold", sans-serif;
   transition: ease-in-out 0.3s;
 }
 
@@ -445,7 +451,7 @@ section {
   text-transform: uppercase;
   display: block;
   font-weight: 600;
-  font-family: "Poppins", sans-serif;
+  font-family: "pretendBold", sans-serif;
   color: #050d18;
 }
 
@@ -489,7 +495,7 @@ section {
   font-size: 18px;
   font-weight: 600;
   text-transform: uppercase;
-  font-family: "Poppins", sans-serif;
+  font-family: "pretendBold", sans-serif;
   color: #050d18;
   margin-bottom: 10px;
 }
@@ -1001,7 +1007,7 @@ section {
   padding: 10px 15px;
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .php-email-form button[name=submitBtn] {
   background: #149ddd;
   border: 0;
   padding: 10px 24px;
@@ -1107,4 +1113,9 @@ section {
 .desc {
   padding: 15px;
   text-align: center;
+}
+
+p img {
+  max-width: 100%; /* This ensures that the image doesn't exceed its parent container's width */
+  height: auto;    /* This maintains the aspect ratio of the image */
 }

@@ -1,5 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myProject.myPj.client.indexPage.mapper.IndexPageMapper">	<!-- mapper 인터페이스가 위치하는 경로 -->
-
+	<select id="getPostDetail" parameterType="String" resultType="com.myProject.myPj.vo.PostVo">
+		SELECT 
+				*
+		FROM 
+				POST_TABLE
+		WHERE 
+				ID = #{keyId}
+	</select>
+	<select id="getReplyDetail" parameterType="String" resultType="com.myProject.myPj.vo.ReplyVo">
+		SELECT 
+				REPLY_KEY_ID,
+				POST_REFER_KEY_ID,
+				REPLY_CONTENT,
+				REG_ID,
+				REG_DATE,
+				REPLY_DEPTH,
+				PASSWORD
+		FROM 
+				POST_REPLY_TABLE PRT
+		WHERE 
+				PRT.POST_REFER_KEY_ID = #{keyId}
+	</select>
+	<select id="getPostList" parameterType="String" resultType="com.myProject.myPj.vo.PostVo">
+		SELECT 
+		    ID,
+		    TITLE,
+		    CONTENT,
+		    WRITER,
+		    VIEW_CNT,
+		    NOTICE_YN,
+		    DELETE_YN,
+		    CREATE_DATE,
+		    MODIFIED_DATE,
+		    POST_TYPE,
+		    DATE_FORMAT(PT.CREATE_DATE, '%m')
+		FROM 
+		    POST_TABLE PT
+		WHERE 
+		    DATE_FORMAT(PT.CREATE_DATE, '%Y') = #{year}
+		    AND DATE_FORMAT(PT.CREATE_DATE, '%m') =#{month}
+	</select>
 </mapper>

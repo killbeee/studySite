@@ -26,7 +26,7 @@ public class UserService {
 	 @Autowired
 	 private CommonMapper commonMapper;
 
-	 
+
 	public String getKaKaoAccessToken(String code){
         String access_Token="";
         String refresh_Token ="";
@@ -84,7 +84,7 @@ public class UserService {
 
         return access_Token;
     }
-    
+
 	public UserVo createKakaoUser(String token) {
         String reqURL = "https://kapi.kakao.com/v2/user/me";
         Long id = null ;
@@ -133,16 +133,16 @@ public class UserService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         	userVO.setSocialUserId(id);
         	userVO.setUserNick(nick);
-        
+
         return userVO;
     }
 
-	
-	
-	
+
+
+
 	/**
 	 * NAVER AccessToken 처리
 	 * @param authorize_code
@@ -151,11 +151,11 @@ public class UserService {
 	public String getNaverAccessToken (String code) {
 			String access_Token = "";
 			String reqURL = "https://nid.naver.com/oauth2.0/token";
-			
+
 	        try {
 	            URL url = new URL(reqURL);
 	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	            
+
 	            //POST 요청을 위해 기본값이 false인 setDoOutput을 true로
 	            conn.setRequestMethod("POST");
 	            conn.setDoOutput(true);
@@ -166,12 +166,12 @@ public class UserService {
 	            sb.append("&client_id=CK6or9NNWc_e97qwwQbg");
 	            sb.append("&client_secret=EpWoy0kqy0");
 	            sb.append("&redirect_uri=http://localhost:8080/naver/callback");
-	          //  sb.append("&redirect_uri=http://rong3531.synology.me:4700/naver/callback"); 
+	          //  sb.append("&redirect_uri=http://rong3531.synology.me:4700/naver/callback");
 	            sb.append("&code="+code);
 //	            sb.append("&state=url_parameter");
 	            bw.write(sb.toString());
 	            bw.flush();
-	            
+
 	            //결과 코드가 200이라면 성공
 	            int responseCode = conn.getResponseCode();
 	            if(responseCode==200){
@@ -179,15 +179,15 @@ public class UserService {
 		            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		            String line = "";
 		            String result = "";
-		            
+
 		            while ((line = br.readLine()) != null) {
 		                result += line;
 		            }
-		            
+
 		            //Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
 		            JsonParser parser = new JsonParser();
 		            JsonElement element = parser.parse(result);
-		            
+
 		            access_Token = element.getAsJsonObject().get("access_token").getAsString();
 		          //refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
 		            br.close();
@@ -195,11 +195,11 @@ public class UserService {
 	            }
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	        } 
-	        
+	        }
+
 	        return access_Token;
 	    }
-	
+
 	/**
 	 * NAVER USER INFO
 	 * @param access_Token
@@ -212,42 +212,42 @@ public class UserService {
 	        URL url = new URL(reqURL);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("POST");
-	        
+
 	        //요청에 필요한 Header에 포함될 내용
 	        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
-	        
+
 	        int responseCode = conn.getResponseCode();
 	        if(responseCode == 200){
 		        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		        
+
 		        String line = "";
 		        String result = "";
-		        
+
 		        while ((line = br.readLine()) != null) {
 		            result += line;
 		        }
 		        JsonParser parser = new JsonParser();
 		        JsonElement element = parser.parse(result);
-		        
+
 		        JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
-		        
+
 		        String name = response.getAsJsonObject().get("name").getAsString();
 		        String email = response.getAsJsonObject().get("email").getAsString();
 		        String id = response.getAsJsonObject().get("id").getAsString();
-		        
+
 		        userVO.setSocialUserId(id);
 		        userVO.setUserName(name);
 		        userVO.setUserEmail(email);
-		        
+
 	        }
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
 		return userVO;
 	}
-	
-	
-	
+
+
+
 	public UserVo getUser(Object id) {
         UserVo userVo = userMapper.getUser(id);
 
